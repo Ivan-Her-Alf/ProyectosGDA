@@ -8,12 +8,13 @@
 :root{--azul:#108EC3;--turquesa:#16A2AD;--menta:#4CB88E;--verde:#5AAE71;--lima:#92BC48;--lima2:#B0C002;--texto:#173444;--muted:#60747E;--blanco:#fff;--borde:#DDE9EA}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{min-height:100vh;margin:0;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;color:var(--texto);background-color:#F5FAFA;background-image:radial-gradient(circle at 0 0,rgba(16,142,195,.14),transparent 34%),radial-gradient(circle at 100% 100%,rgba(176,192,2,.15),transparent 36%),linear-gradient(145deg,#F7FCFD 0%,#F4FAF7 52%,#FAFCEB 100%)}
 .tarjeta{width:100%;max-width:760px;margin:auto;overflow:hidden;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.85);border-radius:28px;box-shadow:0 24px 70px rgba(16,142,195,.14)}
-.barra{height:8px;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--lima),var(--lima2))}.interior{padding:36px}.encabezado{text-align:center}.insignia{display:inline-flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.titulo{max-width:650px;margin:20px auto 0;color:var(--texto);font-size:30px;line-height:1.22;text-align:center;scroll-margin-top:20px;outline:none}.subtitulo{max-width:600px;margin:12px auto 0;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}.contenido{margin-top:32px;padding:24px;background:rgba(248,250,252,.72);border-radius:24px}.fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grupo{margin-bottom:18px}.etiqueta{display:block;margin-bottom:7px;color:var(--texto);font-size:14px;font-weight:600}.req{color:var(--azul)}.campo{width:100%;padding:13px 14px;background:#fff;color:var(--texto);border:1px solid var(--borde);border-radius:12px;font:14px Arial;outline:none;transition:.2s}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.10)}textarea.campo{min-height:120px;resize:vertical;line-height:1.5}
+.barra{height:8px;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--lima),var(--lima2))}.interior{padding:36px}.encabezado{text-align:center}.insignia{display:inline-flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.titulo{max-width:650px;margin:20px auto 0;color:var(--texto);font-size:30px;line-height:1.22;text-align:center;scroll-margin-top:20px;outline:none}.subtitulo{max-width:600px;margin:12px auto 0;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}.contenido{margin-top:32px;padding:24px;const CATALOGOS_URL =
+background:rgba(248,250,252,.72);border-radius:24px}.fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grupo{margin-bottom:18px}.etiqueta{display:block;margin-bottom:7px;color:var(--texto);font-size:14px;font-weight:600}.req{color:var(--azul)}.campo{width:100%;padding:13px 14px;background:#fff;color:var(--texto);border:1px solid var(--borde);border-radius:12px;font:14px Arial;outline:none;transition:.2s}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.10)}textarea.campo{min-height:120px;resize:vertical;line-height:1.5}
 .pregunta{margin:0 0 20px;padding:18px;background:#fff;border:1px solid #EEF3F4;border-radius:16px;box-shadow:0 3px 12px rgba(23,52,68,.05)}.texto-pregunta{margin:0 0 15px;color:var(--texto);font-size:14px;font-weight:600;line-height:1.5}.opciones{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.opcion{position:relative}.opcion input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.opcion label{min-height:78px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px 5px;background:#F7FAFA;color:#526B76;border:1px solid #E3ECEE;border-radius:12px;font-size:11px;line-height:1.25;text-align:center;cursor:pointer;transition:.2s}.opcion label:hover{background:#fff;border-color:var(--turquesa);transform:translateY(-1px)}.opcion input:checked+label{background:linear-gradient(135deg,var(--azul),var(--turquesa));color:#fff;border-color:var(--turquesa);box-shadow:0 6px 14px rgba(16,142,195,.20)}.numero{display:block;margin-bottom:5px;color:var(--azul);font-size:20px;font-weight:700}.opcion input:checked+label .numero{color:#fff}
-.escala6{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.escala6 .opcion label{min-height:82px}.escala6 .opcion input:checked+label{background:linear-gradient(135deg,var(--menta),var(--verde));border-color:var(--verde)}.escala6 .opcion input:checked+label .numero{color:#fff}.texto-mini{font-size:9px;line-height:1.25}
+.escala5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.escala5 .opcion label{min-height:82px}.escala5 .opcion input:checked+label{background:linear-gradient(135deg,var(--menta),var(--verde));border-color:var(--verde)}.escala5 .opcion input:checked+label .numero{color:#fff}.texto-mini{font-size:9px;line-height:1.25}
 .comentarios{margin-top:22px;padding:18px;background:#fff;border:1px solid #DCEBED;border-radius:16px}.comentarios-titulo{margin:0 0 14px;font-size:14px;font-weight:700;line-height:1.5}.si-no{display:grid;grid-template-columns:repeat(2,minmax(100px,150px));gap:10px;margin-bottom:0}.si-no .opcion label{min-height:48px;flex-direction:row;font-size:14px;font-weight:700}.comentario-caja{margin-top:16px}.ayuda{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
 .error{display:none;margin-top:20px;padding:13px 15px;background:#FFF5F5;color:#B42318;border:1px solid #FFD1CC;border-radius:12px;font-size:13px}.error.visible{display:block}.navegacion{margin-top:30px;display:flex;justify-content:space-between;gap:12px}.boton{min-height:46px;display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;font:600 14px Arial;cursor:pointer;transition:.2s}.boton:hover{transform:translateY(-1px)}.boton:disabled{opacity:.65;cursor:not-allowed;transform:none}.anterior{background:#fff;color:#526B76;border:1px solid var(--borde)}.continuar{margin-left:auto;background:linear-gradient(135deg,var(--azul),var(--turquesa));color:#fff;border:0;box-shadow:0 7px 16px rgba(16,142,195,.20)}.enviar{margin-left:auto;background:linear-gradient(135deg,var(--verde),var(--lima));color:#fff;border:0;box-shadow:0 7px 16px rgba(90,174,113,.22)}.final{padding:52px 20px;text-align:center}.check{width:64px;height:64px;display:flex;align-items:center;justify-content:center;margin:auto;border-radius:50%;background:rgba(76,184,142,.15);color:var(--verde);font-size:36px;font-weight:700}.final h1{margin:22px 0 0}.final p{color:var(--muted);line-height:1.6}
-@media(max-width:700px){body{padding:16px 12px}.interior{padding:24px 18px}.titulo{font-size:23px}.contenido{padding:16px}.fila{grid-template-columns:1fr;gap:0}.opciones{grid-template-columns:1fr}.opcion label{min-height:56px;flex-direction:row;justify-content:flex-start;gap:12px;padding:10px 14px;text-align:left}.numero{width:25px;margin:0;text-align:center}.escala6{grid-template-columns:repeat(3,1fr)}.escala6 .opcion label{min-height:76px;flex-direction:column;justify-content:center;text-align:center}.escala6 .numero{width:auto;margin-bottom:5px}.si-no{grid-template-columns:1fr 1fr}.si-no .opcion label{justify-content:center;min-height:48px}.boton{flex:1;padding:12px}.continuar,.enviar{margin-left:0}}@media(max-width:400px){.escala6{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){body{padding:16px 12px}.interior{padding:24px 18px}.titulo{font-size:23px}.contenido{padding:16px}.fila{grid-template-columns:1fr;gap:0}.opciones{grid-template-columns:1fr}.opcion label{min-height:56px;flex-direction:row;justify-content:flex-start;gap:12px;padding:10px 14px;text-align:left}.numero{width:25px;margin:0;text-align:center}.escala5{grid-template-columns:repeat(3,1fr)}.escala5 .opcion label{min-height:76px;flex-direction:column;justify-content:center;text-align:center}.escala5 .numero{width:auto;margin-bottom:5px}.si-no{grid-template-columns:1fr 1fr}.si-no .opcion label{justify-content:center;min-height:48px}.boton{flex:1;padding:12px}.continuar,.enviar{margin-left:0}}@media(max-width:400px){.escala5{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -23,6 +24,18 @@
 </div></main>
 <script>
 const FLOW_URL = "https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/28/workflows/8496f0da440b4428b430ff937701f02c/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=p8u--ZhToWbuFjSicvcaDKFUV7JZSMnNDqnlvZgqc4g";
+/*
+  PEGA AQUÍ LAS URL DE DOS FLUJOS HTTP DE POWER AUTOMATE.
+  Cada flujo debe leer su lista de SharePoint y responder JSON, por ejemplo:
+  { "value": [{ "Title": "Nombre Apellido" }] }
+*/
+const CATALOGOS_URL = "https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/16ef6d535ebb4df38fe9bc4098c844f0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CShd6BPT2DtDk_UJkqE_A-uufFFM87l3fgRZhZ6XZTU";
+
+function construirUrlCatalogo(catalogo){
+  const url=new URL(CATALOGOS_URL);
+  url.searchParams.set('catalogo',catalogo);
+  return url.toString();
+}
 const secciones=[
 {clave:'datos',titulo:'Datos del colaborador',subtitulo:'Completa tus datos para comenzar.'},
 {clave:'reclutamiento',titulo:'Cuéntanos cómo fue tu experiencia al iniciar tu proceso.',subtitulo:''},
@@ -41,24 +54,79 @@ contratacion:'¿Tienes comentarios sobre tu proceso de contratación?',
 capacitacion:'¿Tienes comentarios sobre tu proceso de inducción institucional?',
 general:'¿Tienes comentarios sobre tu experiencia general de ingreso?'
 };
-const recomendacion=['Poco probable','Neutral','Probable','Muy probable','Totalmente probable'];
-const experiencia=['Mala','Regular','Buena','Muy buena','Excelente'];
+const recomendacion=['Nada probable','Poco probable','Neutral','Probable','Totalmente probable'];
+const experiencia=['Muy mala','Mala','Regular','Buena','Excelente'];
 let paso=0;
 const respuestas={apellidoPaterno:'',apellidoMaterno:'',nombres:'',numeroColaborador:'',puesto:'',fechaIngreso:'',reclutamiento:{},nombreReclutador:'',contratacion:{},capacitacion:{},responsableInduccion:'',recomendacion:'',experienciaGeneral:'',tieneComentario:{reclutamiento:'',contratacion:'',capacitacion:'',general:''},comentarios:{reclutamiento:'',contratacion:'',capacitacion:'',general:''}};
 const titulo=document.getElementById('titulo'),subtitulo=document.getElementById('subtitulo'),contenido=document.getElementById('contenido'),error=document.getElementById('error'),btnAnt=document.getElementById('anterior'),btnSig=document.getElementById('continuar');
 const esc=v=>String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 function campo(id,label,valor,tipo='text',extra=''){return `<div class="grupo"><label class="etiqueta" for="${id}">${label} <span class="req">*</span></label><input id="${id}" class="campo" type="${tipo}" value="${esc(valor)}" ${extra}></div>`}
 function pregunta(sec,i,texto){const ops=etiquetas.map((et,j)=>{const n=j+1;return `<div class="opcion"><input type="radio" id="${sec}_${i}_${n}" name="${sec}_${i}" value="${n}" ${Number(respuestas[sec][i])===n?'checked':''}><label for="${sec}_${i}_${n}"><span class="numero">${n}</span><span>${et}</span></label></div>`}).join('');return `<fieldset class="pregunta"><legend class="texto-pregunta">${texto} <span class="req">*</span></legend><div class="opciones">${ops}</div></fieldset>`}
-function escala(nombre,texto,valor,labels){const ops=[1,2,3,4,5].map(n=>`<div class="opcion"><input type="radio" id="${nombre}_${n}" name="${nombre}" value="${n}" ${Number(valor)===n&&valor!==''?'checked':''}><label for="${nombre}_${n}"><span class="numero">${n}</span><span class="texto-mini">${labels[n]}</span></label></div>`).join('');return `<fieldset class="pregunta"><legend class="texto-pregunta">${texto} <span class="req">*</span></legend><div class="escala6">${ops}</div></fieldset>`}
+function escala(nombre,texto,valor,labels){const ops=[1,2,3,4,5].map(n=>`<div class="opcion"><input type="radio" id="${nombre}_${n}" name="${nombre}" value="${n}" ${Number(valor)===n&&valor!==''?'checked':''}><label for="${nombre}_${n}"><span class="numero">${n}</span><span class="texto-mini">${labels[n-1]}</span></label></div>`).join('');return `<fieldset class="pregunta"><legend class="texto-pregunta">${texto} <span class="req">*</span></legend><div class="escala5">${ops}</div></fieldset>`}
 function enlazar(id,key,numerico=false){document.getElementById(id).addEventListener('input',e=>{if(numerico)e.target.value=e.target.value.replace(/\D/g,'');respuestas[key]=e.target.value})}
 function renderDatos(){contenido.innerHTML=`<div class="fila">${campo('apellidoPaterno','Apellido paterno',respuestas.apellidoPaterno)}${campo('apellidoMaterno','Apellido materno',respuestas.apellidoMaterno)}</div>${campo('nombres','Nombre(s)',respuestas.nombres)}<div class="fila">${campo('numeroColaborador','Número de colaborador',respuestas.numeroColaborador,'text','inputmode="numeric"')}${campo('puesto','Puesto',respuestas.puesto)}</div>${campo('fechaIngreso','Fecha de ingreso',respuestas.fechaIngreso,'date')}`;enlazar('apellidoPaterno','apellidoPaterno');enlazar('apellidoMaterno','apellidoMaterno');enlazar('nombres','nombres');enlazar('numeroColaborador','numeroColaborador',true);enlazar('puesto','puesto');enlazar('fechaIngreso','fechaIngreso')}
 function renderLikert(clave){contenido.innerHTML=preguntas[clave].map((p,i)=>pregunta(clave,i,p)).join('');preguntas[clave].forEach((_,i)=>document.querySelectorAll(`input[name="${clave}_${i}"]`).forEach(op=>op.addEventListener('change',e=>respuestas[clave][i]=Number(e.target.value))))}
 function agregarTexto(id,label,key){const d=document.createElement('div');d.innerHTML=campo(id,label,respuestas[key]);contenido.appendChild(d.firstElementChild);enlazar(id,key)}
+function normalizarOpciones(data){
+  const items=Array.isArray(data)?data:(Array.isArray(data.value)?data.value:(Array.isArray(data.d?.results)?data.d.results:[]));
+  return [...new Set(items.map(x=>typeof x==='string'?x:(x.Nombre??x.Title??x.NombreCompleto??x.Value??'')).map(x=>String(x).trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+}
+async function agregarDesplegable(id,label,key,catalogo){
+  const grupo=document.createElement('div');
+  grupo.className='grupo';
+  grupo.innerHTML=`<label class="etiqueta" for="${id}">${label} <span class="req">*</span></label><select id="${id}" class="campo" disabled><option value="">Cargando opciones...</option></select><p id="estado_${id}" class="ayuda"></p>`;
+  contenido.appendChild(grupo);
+
+  const select=document.getElementById(id);
+  const estado=document.getElementById(`estado_${id}`);
+
+  select.addEventListener('change',e=>{
+    respuestas[key]=e.target.value;
+  });
+
+  if(!CATALOGOS_URL||CATALOGOS_URL.includes('PEGA_AQUI')){
+    select.innerHTML='<option value="">Configura la URL del catálogo</option>';
+    estado.textContent='Falta configurar la URL del flujo de catálogos.';
+    return;
+  }
+
+  try{
+    const url=construirUrlCatalogo(catalogo);
+    const r=await fetch(url,{
+      method:'GET',
+      headers:{'Accept':'application/json'},
+      cache:'no-store'
+    });
+
+    if(!r.ok){
+      const detalle=await r.text().catch(()=>'');
+      throw new Error(`HTTP ${r.status}. ${detalle}`);
+    }
+
+    const opciones=normalizarOpciones(await r.json());
+    select.innerHTML='<option value="">Selecciona una opción</option>';
+
+    opciones.forEach(nombre=>{
+      const opcion=document.createElement('option');
+      opcion.value=nombre;
+      opcion.textContent=nombre;
+      if(respuestas[key]===nombre)opcion.selected=true;
+      select.appendChild(opcion);
+    });
+
+    select.disabled=false;
+    estado.textContent=opciones.length?`${opciones.length} opciones disponibles.`:'El catálogo no devolvió opciones activas.';
+  }catch(e){
+    select.innerHTML='<option value="">No fue posible cargar el catálogo</option>';
+    estado.textContent='Revisa la URL, la respuesta del flujo y los permisos.';
+    console.error(`Error cargando el catálogo ${catalogo}:`,e);
+  }
+}
 function bloqueComentarios(clave){return `<div class="comentarios"><p class="comentarios-titulo">${textosComentarios[clave]} <span class="req">*</span></p><div class="si-no"><div class="opcion"><input type="radio" id="comentario_${clave}_si" name="comentario_${clave}" value="si" ${respuestas.tieneComentario[clave]==='si'?'checked':''}><label for="comentario_${clave}_si">Sí</label></div><div class="opcion"><input type="radio" id="comentario_${clave}_no" name="comentario_${clave}" value="no" ${respuestas.tieneComentario[clave]==='no'?'checked':''}><label for="comentario_${clave}_no">No</label></div></div><div id="caja_${clave}" class="comentario-caja" ${respuestas.tieneComentario[clave]==='si'?'':'hidden'}><label class="etiqueta" for="texto_${clave}">Escribe tu comentario <span class="req">*</span></label><textarea id="texto_${clave}" class="campo" placeholder="Comparte los detalles de tu experiencia...">${esc(respuestas.comentarios[clave])}</textarea><p class="ayuda">Para continuar, escribe al menos un carácter distinto de espacios.</p></div></div>`}
 function agregarComentarios(clave){const d=document.createElement('div');d.innerHTML=bloqueComentarios(clave);contenido.appendChild(d.firstElementChild);document.querySelectorAll(`input[name="comentario_${clave}"]`).forEach(x=>x.addEventListener('change',e=>{respuestas.tieneComentario[clave]=e.target.value;const caja=document.getElementById(`caja_${clave}`);caja.hidden=e.target.value!=='si';if(e.target.value==='no'){respuestas.comentarios[clave]='';const area=document.getElementById(`texto_${clave}`);if(area)area.value=''}else{requestAnimationFrame(()=>document.getElementById(`texto_${clave}`).focus())}}));const area=document.getElementById(`texto_${clave}`);if(area)area.addEventListener('input',e=>respuestas.comentarios[clave]=e.target.value)}
-function renderReclutamiento(){renderLikert('reclutamiento');agregarTexto('nombreReclutador','Nombre del reclutador','nombreReclutador');agregarComentarios('reclutamiento')}
+async function renderReclutamiento(){renderLikert('reclutamiento');await agregarDesplegable('nombreReclutador','Nombre del reclutador','nombreReclutador','reclutamiento');agregarComentarios('reclutamiento')}
 function renderContratacion(){renderLikert('contratacion');agregarComentarios('contratacion')}
-function renderCapacitacion(){renderLikert('capacitacion');agregarTexto('responsableInduccion','Nombre de la persona que impartió o coordinó la inducción','responsableInduccion');agregarComentarios('capacitacion')}
+async function renderCapacitacion(){renderLikert('capacitacion');await agregarDesplegable('responsableInduccion','Nombre de la persona que impartió o coordinó la inducción','responsableInduccion','capacitacion');agregarComentarios('capacitacion')}
 function renderGeneral(){contenido.innerHTML=escala('recomendacion','¿Qué tan probable es que recomiendes a GDA como lugar para trabajar?',respuestas.recomendacion,recomendacion)+escala('experienciaGeneral','¿Cómo calificarías tu experiencia general durante el proceso de ingreso?',respuestas.experienciaGeneral,experiencia);document.querySelectorAll('[name="recomendacion"]').forEach(x=>x.addEventListener('change',e=>respuestas.recomendacion=Number(e.target.value)));document.querySelectorAll('[name="experienciaGeneral"]').forEach(x=>x.addEventListener('change',e=>respuestas.experienciaGeneral=Number(e.target.value)));agregarComentarios('general')}
 function comentarioValido(clave){if(!respuestas.tieneComentario[clave])return false;if(respuestas.tieneComentario[clave]==='si'&&!respuestas.comentarios[clave].trim())return false;return true}
 function validar(){const k=secciones[paso].clave;if(k==='datos')return !!(respuestas.apellidoPaterno.trim()&&respuestas.apellidoMaterno.trim()&&respuestas.nombres.trim()&&respuestas.numeroColaborador.trim()&&respuestas.puesto.trim()&&respuestas.fechaIngreso);if(['reclutamiento','contratacion','capacitacion'].includes(k)){if(!preguntas[k].every((_,i)=>respuestas[k][i]))return false;if(k==='reclutamiento'&&!respuestas.nombreReclutador.trim())return false;if(k==='capacitacion'&&!respuestas.responsableInduccion.trim())return false;return comentarioValido(k)}if(k==='general')return respuestas.recomendacion!==''&&respuestas.experienciaGeneral!==''&&comentarioValido('general');return true}
@@ -71,5 +139,6 @@ btnAnt.addEventListener('click',()=>{if(paso>0){paso--;render();subir()}});
 render();
 </script>
 </body>
+</html>
 </html>
 
