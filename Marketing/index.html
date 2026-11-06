@@ -3,219 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Recepción de imágenes V2</title>
+<title>Recepción de imágenes por lotes</title>
 <style>
 :root{--azul:#108ec3;--turquesa:#16a2ad;--menta:#4cb88e;--verde:#5aae71;--lima:#92bc48;--texto:#173444;--sec:#60747e;--borde:#dde8eb;--blanco:#fff;--rojo:#b42318;--rojo-claro:#fff3f3;--amarillo:#8a6215;--amarillo-claro:#fff9e9}
-html{min-height:100%;scroll-behavior:smooth;box-sizing:border-box}
-body,main,header,nav,section,div,label,input,select,button,span,strong,small,p,h1,h2,h3{box-sizing:border-box}
-body{width:100%;min-height:100vh;min-height:100dvh;margin:0;padding:32px 16px;color:var(--texto);font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(16,142,195,.13),transparent 34%),radial-gradient(circle at bottom right,rgba(146,188,72,.15),transparent 38%),linear-gradient(145deg,#f8fcfd,#f4faf7 55%,#fbfceb)}
-button,input,select{font:inherit}.tarjeta{position:relative;width:100%;max-width:780px;min-height:calc(100dvh - 64px);margin:auto;overflow:visible;background:rgba(255,255,255,.98);border:1px solid rgba(255,255,255,.85);border-radius:30px;box-shadow:0 25px 70px rgba(16,142,195,.14)}
-.barra{height:8px;border-radius:30px 30px 0 0;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--verde),var(--lima))}.interior{padding:34px}.encabezado{text-align:center}.etiqueta{display:inline-flex;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.encabezado h1{margin:18px 0 0;font-size:30px}.encabezado p{max-width:610px;margin:11px auto 0;color:var(--sec);font-size:14px;line-height:1.6}
-.pestanas{width:100%;max-width:600px;margin:28px auto 0;padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px;border-radius:18px;background:#f0f4f5}.pestana{padding:13px 10px;border:0;border-radius:13px;background:transparent;color:#64748b;font-weight:700;cursor:pointer}.pestana.activa{background:#fff;color:var(--turquesa);box-shadow:0 3px 10px rgba(23,52,68,.08)}
-.panel{display:none;width:100%;max-width:600px;margin:28px auto 0;padding:24px;border-radius:26px;background:rgba(248,250,252,.78)}.panel.activo{display:block}.icono{width:50px;height:50px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:16px;background:rgba(16,142,195,.1);color:var(--azul);font-size:24px}.panel h2{margin:12px 0 0;text-align:center;font-size:20px}.descripcion{margin:6px 0 0;color:var(--sec);text-align:center;font-size:14px;line-height:1.5}
-.grupo{margin-top:20px}.grupo label{display:block;margin-bottom:7px;font-size:14px;font-weight:700}.requerido{color:var(--azul)}.campo{width:100%;padding:13px 14px;border:1px solid var(--borde);border-radius:12px;background:#fff;color:var(--texto);outline:none}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.1)}.fila{display:grid;grid-template-columns:1fr 1fr;gap:14px}.buscador{position:relative}.buscador .campo{padding-right:100px}.btn-buscar{position:absolute;top:5px;right:5px;height:37px;padding:0 13px;border:0;border-radius:9px;background:linear-gradient(135deg,var(--azul),var(--turquesa));color:#fff;font-size:12px;font-weight:700;cursor:pointer}
-.desplegable{position:absolute;z-index:9999;top:calc(100% + 8px);left:0;display:none;width:100%;max-height:min(390px,55dvh);padding:8px;overflow-y:auto;background:#fff;border:1px solid var(--borde);border-radius:16px;box-shadow:0 18px 45px rgba(23,52,68,.22);scrollbar-width:thin;scrollbar-color:var(--turquesa) #edf3f4}.desplegable.visible{display:block}.resultado-opcion{width:100%;padding:12px;border:0;border-radius:11px;background:#fff;color:var(--texto);text-align:left;font-size:13px;font-weight:700;cursor:pointer}.resultado-opcion:hover,.resultado-opcion:focus{background:#f1fafa;outline:none}.sin-resultados,.buscando-resultados{padding:16px;color:#71818a;text-align:center;font-size:13px}.dato-nombre{grid-column:1/-1}
-.estado{margin-top:20px;padding:16px;border-radius:18px}.exito{background:#ecfbf4;border:1px solid #bde8d2}.error{background:var(--rojo-claro);color:var(--rojo);border:1px solid #f7c4c4}.aviso{background:var(--amarillo-claro);color:var(--amarillo);border:1px solid #f3d78e}.estado-titulo{font-weight:700}.datos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.dato{padding:14px;border-radius:12px;background:#fff}.dato small{display:block;color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:1px}.dato strong{display:block;margin-top:5px;font-size:14px}.registro{margin-top:20px;padding:18px;border:1px solid var(--borde);border-radius:18px;background:#fff}.registro h3{margin:0;font-size:15px}.mensaje{display:none;margin-top:14px;padding:12px;border-radius:12px;font-size:13px;line-height:1.5}.mensaje.visible{display:block}.mensaje.error{display:block}.mensaje.exito{display:block}
-.boton{width:100%;margin-top:16px;padding:13px;border:0;border-radius:12px;color:#fff;background:linear-gradient(135deg,var(--menta),var(--verde));font-weight:700;cursor:pointer}.boton.azul{background:linear-gradient(135deg,var(--azul),var(--turquesa))}.boton:disabled{opacity:.45;cursor:not-allowed}.resumen{display:flex;justify-content:space-between;gap:12px;margin-top:20px;padding:15px;border:1px solid var(--borde);border-radius:16px;background:#fff}.resumen small{display:block;color:#94a3b8;font-weight:700}.resumen-datos{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:6px;font-size:13px;font-weight:700}.cambiar{padding:4px;border:0;background:transparent;color:var(--turquesa);font-size:12px;font-weight:700;cursor:pointer}
-.objetivo{margin-top:20px;padding:16px;border:1px solid #cce8e8;border-radius:16px;background:#eef8f8}.objetivo p{margin:8px 0 0;color:var(--sec);font-size:12px;line-height:1.5}.selector{width:100%;margin-top:20px;padding:38px 20px;border:2px dashed #c9d7da;border-radius:18px;background:#fff;text-align:center;cursor:pointer}.selector b,.selector span{display:block}.selector b{margin-top:10px}.selector span{margin-top:5px;color:#819099;font-size:12px}.lista{margin-top:18px}.lista-cabecera{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:700}.contador{padding:4px 9px;border-radius:999px;background:#e8eff1;color:#526b76;font-size:11px}.archivo{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-top:8px;padding:11px;border:1px solid var(--borde);border-radius:12px;background:#fff}.archivo-info{min-width:0}.archivo-info b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.archivo-info span{display:block;margin-top:3px;color:#94a3b8;font-size:11px}.archivo-info em{display:block;margin-top:7px;color:#315966;font-size:11px;font-style:normal;word-break:break-all}.eliminar{padding:7px 10px;border:0;border-radius:8px;background:#fff2f2;color:#c03636;cursor:pointer}
-.progreso{display:none;margin-top:16px}.progreso.visible{display:block}.barra-progreso{height:10px;border-radius:99px;background:#e5eef0;overflow:hidden}.avance{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));transition:width .25s}.texto-progreso{margin-top:7px;color:var(--sec);font-size:12px}.resultado-final{display:none;margin-top:18px;padding:18px;border-radius:18px;text-align:center;font-weight:700}.resultado-final.visible{display:block}.resultado-final.exito{color:#17612e}.resultado-final.error{color:var(--rojo)}.oculto{display:none!important}.nota{margin:22px 0 0;color:#94a3b8;text-align:center;font-size:11px}
-@media(max-width:650px){body{padding:14px 10px}.tarjeta{min-height:calc(100dvh - 28px);border-radius:22px}.barra{border-radius:22px 22px 0 0}.interior{padding:24px 16px}.encabezado h1{font-size:24px}.pestanas,.fila,.datos{grid-template-columns:1fr}.panel{padding:17px}.buscador .campo{padding-right:14px}.btn-buscar{position:static;width:100%;height:42px;margin-top:8px}.resumen{flex-direction:column}.dato-nombre{grid-column:auto}}
+*{box-sizing:border-box}html{min-height:100%;scroll-behavior:smooth}body{width:100%;min-height:100vh;margin:0;padding:32px 16px;color:var(--texto);font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(16,142,195,.13),transparent 34%),radial-gradient(circle at bottom right,rgba(146,188,72,.15),transparent 38%),linear-gradient(145deg,#f8fcfd,#f4faf7 55%,#fbfceb)}button,input{font:inherit}.tarjeta{width:100%;max-width:820px;min-height:calc(100vh - 64px);margin:auto;background:rgba(255,255,255,.98);border-radius:30px;box-shadow:0 25px 70px rgba(16,142,195,.14)}.barra{height:8px;border-radius:30px 30px 0 0;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--verde),var(--lima))}.interior{padding:34px}.encabezado{text-align:center}.etiqueta{display:inline-flex;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.encabezado h1{margin:18px 0 0;font-size:30px}.encabezado p{max-width:640px;margin:11px auto 0;color:var(--sec);font-size:14px;line-height:1.6}.pestanas{max-width:640px;margin:28px auto 0;padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px;border-radius:18px;background:#f0f4f5}.pestana{padding:13px 10px;border:0;border-radius:13px;background:transparent;color:#64748b;font-weight:700;cursor:pointer}.pestana.activa{background:#fff;color:var(--turquesa);box-shadow:0 3px 10px rgba(23,52,68,.08)}.panel{display:none;max-width:640px;margin:28px auto 0;padding:24px;border-radius:26px;background:rgba(248,250,252,.78)}.panel.activo{display:block}.icono{width:50px;height:50px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:16px;background:rgba(16,142,195,.1);color:var(--azul);font-size:24px}.panel h2{margin:12px 0 0;text-align:center;font-size:20px}.descripcion{margin:6px 0 0;color:var(--sec);text-align:center;font-size:14px;line-height:1.5}.grupo{margin-top:20px}.grupo label,.lote label{display:block;margin-bottom:7px;font-size:14px;font-weight:700}.requerido{color:var(--azul)}.campo{width:100%;padding:13px 14px;border:1px solid var(--borde);border-radius:12px;background:#fff;color:var(--texto);outline:none}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.1)}.fila{display:grid;grid-template-columns:1fr 1fr;gap:14px}.buscador{position:relative}.buscador .campo{padding-right:100px}.btn-buscar{position:absolute;top:5px;right:5px;height:37px;padding:0 13px;border:0;border-radius:9px;background:linear-gradient(135deg,var(--azul),var(--turquesa));color:#fff;font-size:12px;font-weight:700;cursor:pointer}.desplegable{position:absolute;z-index:9999;top:calc(100% + 8px);left:0;display:none;width:100%;max-height:390px;padding:8px;overflow-y:auto;background:#fff;border:1px solid var(--borde);border-radius:16px;box-shadow:0 18px 45px rgba(23,52,68,.22)}.desplegable.visible{display:block}.resultado-opcion{width:100%;padding:12px;border:0;border-radius:11px;background:#fff;color:var(--texto);text-align:left;font-size:13px;font-weight:700;cursor:pointer}.resultado-opcion:hover{background:#f1fafa}.sin-resultados,.buscando-resultados{padding:16px;color:#71818a;text-align:center;font-size:13px}.estado{margin-top:20px;padding:16px;border-radius:18px}.exito{background:#ecfbf4;border:1px solid #bde8d2}.error{background:var(--rojo-claro);color:var(--rojo);border:1px solid #f7c4c4}.aviso{background:var(--amarillo-claro);color:var(--amarillo);border:1px solid #f3d78e}.estado-titulo{font-weight:700}.datos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.dato{padding:14px;border-radius:12px;background:#fff}.dato small{display:block;color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:1px}.dato strong{display:block;margin-top:5px;font-size:14px}.registro{margin-top:20px;padding:18px;border:1px solid var(--borde);border-radius:18px;background:#fff}.registro h3{margin:0;font-size:15px}.mensaje{display:none;margin-top:14px;padding:12px;border-radius:12px;font-size:13px;line-height:1.5}.mensaje.visible{display:block}.boton{width:100%;margin-top:16px;padding:13px;border:0;border-radius:12px;color:#fff;background:linear-gradient(135deg,var(--menta),var(--verde));font-weight:700;cursor:pointer}.boton.azul{background:linear-gradient(135deg,var(--azul),var(--turquesa))}.boton.secundario{background:#fff;color:var(--turquesa);border:1px solid var(--turquesa)}.boton:disabled{opacity:.45;cursor:not-allowed}.resumen{display:flex;justify-content:space-between;gap:12px;margin-top:20px;padding:15px;border:1px solid var(--borde);border-radius:16px;background:#fff}.resumen small{display:block;color:#94a3b8;font-weight:700}.resumen-datos{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;font-size:13px;font-weight:700}.cambiar{padding:4px;border:0;background:transparent;color:var(--turquesa);font-size:12px;font-weight:700;cursor:pointer}.lotes{display:grid;gap:18px;margin-top:20px}.lote{padding:18px;border:1px solid #cce8e8;border-radius:18px;background:#eef8f8}.lote-cabecera{display:flex;justify-content:space-between;align-items:center;gap:10px}.lote-cabecera h3{margin:0;font-size:16px}.quitar-lote{border:0;background:transparent;color:var(--rojo);font-size:12px;font-weight:700;cursor:pointer}.selector{width:100%;margin-top:16px;padding:30px 18px;border:2px dashed #c9d7da;border-radius:18px;background:#fff;text-align:center;cursor:pointer}.selector b,.selector span{display:block}.selector b{margin-top:8px}.selector span{margin-top:5px;color:#819099;font-size:12px}.lista{margin-top:16px}.lista-cabecera{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:700}.contador{padding:4px 9px;border-radius:999px;background:#e8eff1;color:#526b76;font-size:11px}.archivo{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-top:8px;padding:11px;border:1px solid var(--borde);border-radius:12px;background:#fff}.archivo-info{min-width:0}.archivo-info b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.archivo-info span{display:block;margin-top:3px;color:#94a3b8;font-size:11px}.archivo-info em{display:block;margin-top:7px;color:#315966;font-size:11px;font-style:normal;word-break:break-all}.eliminar{padding:7px 10px;border:0;border-radius:8px;background:#fff2f2;color:#c03636;cursor:pointer}.progreso{display:none;margin-top:16px}.progreso.visible{display:block}.barra-progreso{height:10px;border-radius:99px;background:#e5eef0;overflow:hidden}.avance{height:100%;width:0;background:linear-gradient(90deg,var(--azul),var(--verde));transition:width .25s}.texto-progreso{margin-top:7px;color:var(--sec);font-size:12px}.resultado-final{display:none;margin-top:18px;padding:18px;border-radius:18px;text-align:center;font-weight:700}.resultado-final.visible{display:block}.final{display:none;max-width:640px;margin:35px auto 0;padding:42px 24px;text-align:center;border-radius:26px;background:#ecfbf4;border:1px solid #bde8d2}.final.visible{display:block}.final .check{width:64px;height:64px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(76,184,142,.15);color:var(--verde);font-size:36px;font-weight:700}.final h2{margin:20px 0 8px}.final p{color:var(--sec);line-height:1.6}.oculto{display:none!important}.nota{margin:22px 0 0;color:#94a3b8;text-align:center;font-size:11px}
+@media(max-width:650px){body{padding:14px 10px}.tarjeta{border-radius:22px}.interior{padding:24px 16px}.encabezado h1{font-size:24px}.pestanas,.fila,.datos{grid-template-columns:1fr}.panel{padding:17px}.buscador .campo{padding-right:14px}.btn-buscar{position:static;width:100%;height:42px;margin-top:8px}.resumen{flex-direction:column}}
 </style>
 </head>
 <body>
 <main class="tarjeta"><div class="barra"></div><div class="interior">
-<header class="encabezado"><div class="etiqueta">Recepción de evidencias</div><h1>Registro y carga de imágenes</h1><p>Identifica al colaborador, registra usuarios nuevos cuando sea necesario y envía varias evidencias con un mismo asunto.</p></header>
-<nav class="pestanas"><button id="tabUsuarios" class="pestana activa" type="button">Identificación y registro</button><button id="tabImagenes" class="pestana" type="button">Subir imágenes</button></nav>
+<header class="encabezado"><div class="etiqueta">Recepción de evidencias</div><h1>Registro y carga de imágenes</h1><p>Identifica al colaborador y carga varios lotes de imágenes con asuntos y sucursales diferentes en una sola solicitud.</p></header>
+<nav id="pestanas" class="pestanas"><button id="tabUsuarios" class="pestana activa" type="button">Identificación y registro</button><button id="tabImagenes" class="pestana" type="button">Subir imágenes</button></nav>
 <section id="panelUsuarios" class="panel activo">
 <div class="icono">&#128269;</div><h2>Buscar colaborador</h2><p class="descripcion">Captura el número de colaborador.</p>
-<div class="grupo"><label for="busqueda">Número de colaborador <span class="requerido">&#42;</span></label><div class="buscador"><input id="busqueda" class="campo" type="text" inputmode="numeric" autocomplete="off" placeholder="Escribe el número del usuario"><button id="buscar" class="btn-buscar" type="button">Buscar</button><div id="desplegable" class="desplegable"></div></div></div>
-<div id="usuarioEncontrado" class="estado exito oculto"><div class="estado-titulo" id="mensajeEncontrado">Colaborador localizado</div><div class="datos"><div class="dato dato-nombre"><small>NOMBRE DEL COLABORADOR</small><strong id="datoNombre"></strong></div><div class="dato"><small>MARCA</small><strong id="datoMarca"></strong></div><div class="dato"><small>SUCURSAL</small><strong id="datoSucursal"></strong></div></div><button id="continuarImagenes" class="boton" type="button">Continuar a carga de imágenes</button></div>
-<div id="usuarioNoEncontrado" class="oculto"><div class="estado error"><div class="estado-titulo">Usuario no registrado</div><div style="margin-top:5px;font-size:13px">Registra al colaborador antes de subir imágenes.</div></div>
-<div class="registro"><h3>Registro de nuevo usuario</h3>
-<div class="grupo"><label>Número de colaborador <span class="requerido">&#42;</span></label><input id="regNumero" class="campo" type="text" inputmode="numeric"></div>
-<div class="grupo"><label>Nombre completo <span class="requerido">&#42;</span></label><input id="regNombre" class="campo" type="text"></div>
-<div class="fila"><div class="grupo"><label>Marca <span class="requerido">&#42;</span></label>
-<input
-    id="regMarca"
-    class="campo"
-    type="text"
-    maxlength="100"
-    autocomplete="organization"
-    placeholder="Ej. BIOMEDICA, POLAB, JENNER u OLAB">
-</div><div class="grupo"><label>Sucursal <span class="requerido">&#42;</span></label><input id="regSucursal" class="campo" type="text"></div></div>
-<div class="grupo"><label>Gerente <span class="requerido">&#42;</span></label><input id="regGerente" class="campo" type="text"></div>
-<div class="grupo"><label>Número telefónico del gerente <span class="requerido">&#42;</span></label><input id="regTelefonoGerente" class="campo" type="tel" inputmode="tel" maxlength="15"></div>
+<div class="grupo"><label for="busqueda">Número de colaborador <span class="requerido">*</span></label><div class="buscador"><input id="busqueda" class="campo" type="text" inputmode="numeric" autocomplete="off" placeholder="Escribe el número del usuario"><button id="buscar" class="btn-buscar" type="button">Buscar</button><div id="desplegable" class="desplegable"></div></div></div>
+<div id="usuarioEncontrado" class="estado exito oculto"><div class="estado-titulo" id="mensajeEncontrado">Colaborador localizado</div><div class="datos"><div class="dato"><small>NOMBRE</small><strong id="datoNombre"></strong></div><div class="dato"><small>MARCA</small><strong id="datoMarca"></strong></div></div><button id="continuarImagenes" class="boton" type="button">Continuar a carga de imágenes</button></div>
+<div id="usuarioNoEncontrado" class="oculto"><div class="estado error"><div class="estado-titulo">Usuario no registrado</div><div style="margin-top:5px;font-size:13px">Registra los datos mínimos antes de subir imágenes.</div></div><div class="registro"><h3>Registro de nuevo usuario</h3>
+<div class="grupo"><label>Número de colaborador <span class="requerido">*</span></label><input id="regNumero" class="campo" type="text" inputmode="numeric"></div>
+<div class="grupo"><label>Nombre completo <span class="requerido">*</span></label><input id="regNombre" class="campo" type="text"></div>
+<div class="grupo"><label>Marca <span class="requerido">*</span></label><input id="regMarca" class="campo" type="text" maxlength="100" autocomplete="organization" placeholder="Ej. BIOMEDICA, POLAB, JENNER u OLAB"></div>
+<div class="grupo"><label>Número telefónico del gerente <span class="requerido">*</span></label><input id="regTelefonoGerente" class="campo" type="tel" inputmode="tel" maxlength="15"></div>
 <div id="mensajeRegistro" class="mensaje"></div><button id="guardarUsuario" class="boton azul" type="button">Guardar usuario</button></div></div>
 <div id="mensajeBusqueda" class="mensaje"></div>
 </section>
 <section id="panelImagenes" class="panel">
-<div class="icono" style="color:var(--verde);background:rgba(76,184,142,.12)">&#8679;</div><h2>Subir imágenes</h2><p class="descripcion">Selecciona varias imágenes. Todas usarán el mismo asunto y se enviarán una por una.</p>
+<div class="icono" style="color:var(--verde);background:rgba(76,184,142,.12)">&#8679;</div><h2>Subir imágenes por lotes</h2><p class="descripcion">Cada lote puede tener un asunto y una sucursal diferentes.</p>
 <div id="avisoSinUsuario" class="estado aviso">Primero identifica o registra al colaborador.<br><button id="irIdentificacion" class="cambiar" type="button">Ir a identificación</button></div>
-<div id="cargaActiva" class="oculto"><div class="resumen"><div><small>DATOS DEL COLABORADOR</small><div class="resumen-datos"><span id="resumenNumero"></span><span id="resumenMarca"></span><span id="resumenSucursal"></span></div></div><button id="cambiarUsuario" class="cambiar" type="button">Cambiar</button></div>
-<div class="objetivo"><label for="objetivoImagenes">Asunto de todas las imágenes <span class="requerido">&#42;</span></label><input id="objetivoImagenes" class="campo" type="text" placeholder="Ej. Fachada, Recepción, Señalización"><p>El asunto se aplicará automáticamente a todas las imágenes seleccionadas y se convertirá a un formato como FachadaPrincipal.</p></div>
-<input id="inputArchivos" class="oculto" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple>
-<button id="seleccionarImagenes" class="selector" type="button"><span style="font-size:32px;color:var(--turquesa)">&#9638;</span><b>Seleccionar imágenes</b><span>Formatos permitidos: JPG, JPEG, PNG y WEBP</span></button>
-<div id="mensajeArchivos" class="mensaje"></div><div id="listaArchivos" class="lista oculto"><div class="lista-cabecera"><span>Archivos seleccionados</span><span id="contadorArchivos" class="contador">0</span></div><div id="archivos"></div></div>
-<div id="progreso" class="progreso"><div class="barra-progreso"><div id="avance" class="avance"></div></div><div id="textoProgreso" class="texto-progreso"></div></div>
-<button id="subirImagenes" class="boton" type="button" disabled>Subir imágenes</button><div id="resultadoFinal" class="resultado-final"></div></div>
+<div id="cargaActiva" class="oculto"><div class="resumen"><div><small>DATOS DEL COLABORADOR</small><div class="resumen-datos"><span id="resumenNumero"></span><span id="resumenNombre"></span><span id="resumenMarca"></span></div></div><button id="cambiarUsuario" class="cambiar" type="button">Cambiar</button></div>
+<div class="grupo"><label for="sucursalGeneral">Sucursal para todos los lotes <span class="requerido">*</span></label><input id="sucursalGeneral" class="campo" type="text" maxlength="120" autocomplete="organization" placeholder="Ej. Montes Urales"></div>
+<div id="lotes" class="lotes"></div>
+<button id="agregarLote" class="boton secundario" type="button">+ Agregar otro asunto</button>
+<div id="mensajeArchivos" class="mensaje"></div><div id="progreso" class="progreso"><div class="barra-progreso"><div id="avance" class="avance"></div></div><div id="textoProgreso" class="texto-progreso"></div></div>
+<button id="subirImagenes" class="boton" type="button">Subir todos los lotes</button><div id="resultadoFinal" class="resultado-final"></div></div>
 </section>
-<p class="nota">V3 · Buscador con sugerencias y carga a SharePoint</p>
+<section id="final" class="final"><div class="check">✓</div><h2>¡Gracias por subir las evidencias!</h2><p>Las imágenes se procesaron correctamente. Puedes cerrar esta página.</p></section>
+<p class="nota">V4 · Carga de múltiples lotes en una sola solicitud</p>
 </div></main>
 <script>
 const URL_BUSCAR_USUARIO="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/c8e6afbb7ae84417ba741cb7ed71a603/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ohRQ9POD3Kye5AYyf4rGhHoNUNSKnaOV2ngSw80PcmU";
 const URL_REGISTRAR_USUARIO="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/010b8841298744b090d58ee13d4b17c7/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4KQYz4llhvzhCsOHcv3MBB4J2pcue7R02Vwpwy245ZM";
 const URL_SUBIR_IMAGEN="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/01/workflows/a676ea14bbd34a23b75e5283ed72eb2f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PRr4ShT86dfoTZWJiJuEaIIASO1ETrYkpomO-jpGzdM";
-
-let usuarioActual=null;
-let archivosSeleccionados=[];
-const extensionesPermitidas=["jpg","jpeg","png","webp"];
-const tiposPermitidos=["image/jpeg","image/png","image/webp"];
+let usuarioActual=null, lotes=[], sucursalGeneral="", secuenciaLote=0, temporizadorBusqueda=null, controladorBusqueda=null, resultadosBusqueda=[];
+const extensionesPermitidas=["jpg","jpeg","png","webp"],tiposPermitidos=["image/jpeg","image/png","image/webp"];
 const porId=id=>document.getElementById(id);
-
-function escaparHTML(valor){return String(valor).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function pascalCase(texto){return String(texto||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g," ").trim().split(/\s+/).filter(Boolean).map(p=>p.charAt(0).toUpperCase()+p.slice(1).toLowerCase()).join("")}
-function cambiarPestana(nombre){const u=nombre==="usuarios";porId("tabUsuarios").classList.toggle("activa",u);porId("tabImagenes").classList.toggle("activa",!u);porId("panelUsuarios").classList.toggle("activo",u);porId("panelImagenes").classList.toggle("activo",!u);window.scrollTo({top:0,behavior:"smooth"})}
-function mostrarMensaje(id,texto,tipo){const e=porId(id);e.textContent=texto;e.className=`mensaje visible ${tipo}`}
-function ocultarMensaje(id){porId(id).className="mensaje"}
-function validarURL(url){return url&&!url.startsWith("PEGA_AQUI")}
-async function leerJSON(respuesta){const texto=await respuesta.text();if(!texto)return{};try{return JSON.parse(texto)}catch(e){return{mensaje:texto}}}
-
+function escaparHTML(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function pascalCase(t){return String(t||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]+/g," ").trim().split(/\s+/).filter(Boolean).map(p=>p.charAt(0).toUpperCase()+p.slice(1).toLowerCase()).join("")}
+function cambiarPestana(n){const u=n==="usuarios";porId("tabUsuarios").classList.toggle("activa",u);porId("tabImagenes").classList.toggle("activa",!u);porId("panelUsuarios").classList.toggle("activo",u);porId("panelImagenes").classList.toggle("activo",!u);window.scrollTo({top:0,behavior:"smooth"})}
+function mostrarMensaje(id,tipo,texto){const e=porId(id);e.textContent=texto;e.className=`mensaje visible ${tipo}`}
+function ocultarMensaje(id){porId(id).className="mensaje"}function validarURL(u){return u&&!u.startsWith("PEGA_AQUI")}
+async function leerJSON(r){const t=await r.text();if(!t)return{};try{return JSON.parse(t)}catch{return{mensaje:t}}}
 porId("tabUsuarios").onclick=()=>cambiarPestana("usuarios");porId("tabImagenes").onclick=()=>cambiarPestana("imagenes");porId("irIdentificacion").onclick=()=>cambiarPestana("usuarios");porId("cambiarUsuario").onclick=()=>cambiarPestana("usuarios");porId("continuarImagenes").onclick=()=>cambiarPestana("imagenes");
-let temporizadorBusqueda=null;
-let controladorBusqueda=null;
-let resultadosBusqueda=[];
-
-porId("busqueda").addEventListener("input",function(evento){
-    evento.target.value=evento.target.value.replace(/\D/g,"");
-    usuarioActual=null;
-    porId("usuarioEncontrado").classList.add("oculto");
-    porId("usuarioNoEncontrado").classList.add("oculto");
-    actualizarCarga();
-    clearTimeout(temporizadorBusqueda);
-    const consulta=evento.target.value.trim();
-    if(consulta.length<1){cerrarDesplegable();return;}
-    temporizadorBusqueda=setTimeout(function(){buscarSugerencias(consulta);},400);
+porId("busqueda").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"");usuarioActual=null;porId("usuarioEncontrado").classList.add("oculto");porId("usuarioNoEncontrado").classList.add("oculto");actualizarCarga();clearTimeout(temporizadorBusqueda);const q=e.target.value.trim();if(q.length<1)return cerrarDesplegable();temporizadorBusqueda=setTimeout(()=>buscarSugerencias(q),400)});
+porId("regNumero").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));porId("regTelefonoGerente").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));document.addEventListener("click",e=>{if(!e.target.closest(".buscador"))cerrarDesplegable()});
+function cerrarDesplegable(){porId("desplegable").classList.remove("visible")}
+function normalizarResultado(i){return{numero:String(i.numeroColab??i.NumeroUsuario??i.numero??"").trim(),nombre:String(i.nombreCompleto??i.Title??i.nombre??"").trim(),marca:String(i.marca??i.Marca??"").trim()}}
+function obtenerListaResultados(d){const l=d.resultados??d.usuarios??d.value??[];return Array.isArray(l)?l.map(normalizarResultado).filter(x=>x.numero).slice(0,15):[]}
+function renderizarSugerencias(lista){const d=porId("desplegable");resultadosBusqueda=lista.slice(0,15);if(!lista.length){d.innerHTML='<div class="sin-resultados">Sin coincidencias</div>';d.classList.add("visible");return}d.innerHTML=lista.map((u,i)=>`<button class="resultado-opcion" type="button" data-i="${i}">${escaparHTML(u.numero+' - '+u.nombre)}</button>`).join("");d.classList.add("visible");d.querySelectorAll("button").forEach(b=>b.onclick=()=>{seleccionarUsuario(resultadosBusqueda[Number(b.dataset.i)]);cerrarDesplegable()})}
+async function buscarSugerencias(q){ocultarMensaje("mensajeBusqueda");if(controladorBusqueda)controladorBusqueda.abort();controladorBusqueda=new AbortController();porId("desplegable").innerHTML='<div class="buscando-resultados">Buscando coincidencias...</div>';porId("desplegable").classList.add("visible");try{const r=await fetch(URL_BUSCAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"sugerir",consulta:q,limite:15}),signal:controladorBusqueda.signal});const d=await leerJSON(r);if(!r.ok)throw new Error(d.mensaje||`HTTP ${r.status}`);renderizarSugerencias(obtenerListaResultados(d))}catch(e){if(e.name!=="AbortError")mostrarMensaje("mensajeBusqueda","error",`No fue posible consultar: ${e.message}`)}}
+async function buscarUsuario(){const n=porId("busqueda").value.trim();if(!n)return mostrarMensaje("mensajeBusqueda","error","Captura el número de colaborador.");porId("buscar").disabled=true;try{const r=await fetch(URL_BUSCAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"buscar",consulta:n})});const d=await leerJSON(r);if(!r.ok)throw new Error(d.mensaje||`HTTP ${r.status}`);if(d.encontrado)seleccionarUsuario(normalizarResultado(d));else{usuarioActual=null;porId("usuarioEncontrado").classList.add("oculto");porId("usuarioNoEncontrado").classList.remove("oculto");porId("regNumero").value=n;actualizarCarga()}}catch(e){mostrarMensaje("mensajeBusqueda","error",`No fue posible consultar: ${e.message}`)}finally{porId("buscar").disabled=false}}
+porId("buscar").onclick=buscarUsuario;porId("busqueda").addEventListener("keydown",e=>{if(e.key==="Enter")buscarUsuario()});
+function seleccionarUsuario(u,nuevo=false){usuarioActual=u;porId("busqueda").value=u.numero+" - "+u.nombre;porId("datoNombre").textContent=u.nombre||"Sin nombre";porId("datoMarca").textContent=u.marca;porId("mensajeEncontrado").textContent=nuevo?"Usuario registrado correctamente":"Colaborador localizado";porId("usuarioEncontrado").classList.remove("oculto");porId("usuarioNoEncontrado").classList.add("oculto");actualizarCarga()}
+porId("guardarUsuario").onclick=async()=>{ocultarMensaje("mensajeRegistro");const u={numero:porId("regNumero").value.trim(),nombre:porId("regNombre").value.trim(),marca:porId("regMarca").value.trim(),telefonoGerente:porId("regTelefonoGerente").value.trim()};if(Object.values(u).some(v=>!v))return mostrarMensaje("mensajeRegistro","error","Completa todos los campos obligatorios.");if(u.telefonoGerente.length<10)return mostrarMensaje("mensajeRegistro","error","El teléfono debe contener al menos 10 dígitos.");porId("guardarUsuario").disabled=true;try{const r=await fetch(URL_REGISTRAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"registrar",numeroColab:u.numero,nombreCompleto:u.nombre,marca:u.marca,telefonoGerente:u.telefonoGerente})});const d=await leerJSON(r);if(!r.ok&&r.status!==409)throw new Error(d.mensaje||`HTTP ${r.status}`);if(r.status===409)return mostrarMensaje("mensajeRegistro","error",d.mensaje||"El número ya está registrado.");seleccionarUsuario({numero:u.numero,nombre:u.nombre.toUpperCase(),marca:u.marca.toUpperCase()},true)}catch(e){mostrarMensaje("mensajeRegistro","error",`No fue posible registrar: ${e.message}`)}finally{porId("guardarUsuario").disabled=false}};
+function actualizarCarga(){const ok=Boolean(usuarioActual);porId("avisoSinUsuario").classList.toggle("oculto",ok);porId("cargaActiva").classList.toggle("oculto",!ok);if(ok){porId("resumenNumero").textContent=`Número: ${usuarioActual.numero}`;porId("resumenNombre").textContent=`Nombre: ${usuarioActual.nombre}`;porId("resumenMarca").textContent=`Marca: ${usuarioActual.marca}`;if(!lotes.length)agregarLote()}}
+function extensionDe(n){const p=String(n).toLowerCase().split(".");return p.length>1?p.pop():""}function archivoPermitido(a){const e=extensionDe(a.name);return extensionesPermitidas.includes(e)&&(tiposPermitidos.includes(a.type)||a.type==="")}
+function agregarLote(){secuenciaLote++;lotes.push({id:secuenciaLote,asunto:"",archivos:[]});renderizarLotes()}
+function quitarLote(id){if(lotes.length===1)return;lotes=lotes.filter(l=>l.id!==id);renderizarLotes()}
+function nombreEstimado(l,a,i){const sufijo=l.archivos.length>1?`_${i+1}`:"";return`${usuarioActual.numero}_${pascalCase(usuarioActual.marca)}_${pascalCase(sucursalGeneral)}_${pascalCase(l.asunto)}${sufijo}.${extensionDe(a.name)}`}
+function renderizarLotes(){porId("lotes").innerHTML=lotes.map((l,idx)=>`<article class="lote"><div class="lote-cabecera"><h3>Lote ${idx+1}</h3>${lotes.length>1?`<button class="quitar-lote" data-quitar="${l.id}" type="button">Eliminar lote</button>`:""}</div><div class="grupo"><label>Asunto de las imágenes <span class="requerido">*</span></label><input class="campo" data-asunto="${l.id}" value="${escaparHTML(l.asunto)}" placeholder="Ej. Fachada"></div><input id="file_${l.id}" class="oculto" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" multiple><button class="selector" data-seleccionar="${l.id}" type="button"><span style="font-size:30px;color:var(--turquesa)">&#9638;</span><b>Seleccionar imágenes</b><span>JPG, JPEG, PNG y WEBP</span></button><div class="lista ${l.archivos.length?"":"oculto"}"><div class="lista-cabecera"><span>Archivos seleccionados</span><span class="contador">${l.archivos.length}</span></div>${l.archivos.map((a,i)=>`<div class="archivo"><div class="archivo-info"><b>${escaparHTML(a.name)}</b><span>${(a.size/1024/1024).toFixed(2)} MB</span><em>${escaparHTML(nombreEstimado(l,a,i))}</em></div><button class="eliminar" data-eliminar="${l.id}:${i}" type="button">Eliminar</button></div>`).join("")}</div></article>`).join("");
+porId("lotes").querySelectorAll("[data-asunto]").forEach(e=>e.oninput=()=>{lotes.find(l=>l.id==e.dataset.asunto).asunto=e.value;renderizarNombresSinPerderFoco(e)});porId("lotes").querySelectorAll("[data-seleccionar]").forEach(b=>b.onclick=()=>porId(`file_${b.dataset.seleccionar}`).click());porId("lotes").querySelectorAll("input[type=file]").forEach(i=>i.onchange=e=>{const l=lotes.find(x=>`file_${x.id}`===i.id);Array.from(e.target.files).forEach(a=>{if(archivoPermitido(a)&&!l.archivos.some(x=>x.name===a.name&&x.size===a.size&&x.lastModified===a.lastModified))l.archivos.push(a)});renderizarLotes()});porId("lotes").querySelectorAll("[data-eliminar]").forEach(b=>b.onclick=()=>{const[id,i]=b.dataset.eliminar.split(":").map(Number);lotes.find(l=>l.id===id).archivos.splice(i,1);renderizarLotes()});porId("lotes").querySelectorAll("[data-quitar]").forEach(b=>b.onclick=()=>quitarLote(Number(b.dataset.quitar)))}
+function renderizarNombresSinPerderFoco(e){const pos=e.selectionStart,lote=e.dataset.asunto;renderizarLotes();const nuevo=porId("lotes").querySelector(`[data-asunto="${lote}"]`);nuevo.focus();nuevo.setSelectionRange(pos,pos)}
+porId("agregarLote").onclick=agregarLote;
+porId("sucursalGeneral").addEventListener("input",e=>{
+  sucursalGeneral=e.target.value;
+  renderizarLotes();
+  const campo=porId("sucursalGeneral");
+  campo.focus();
+  campo.setSelectionRange(campo.value.length,campo.value.length);
 });
-porId("regNumero").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
-porId("regTelefonoGerente").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
-
-document.addEventListener("click",function(evento){
-    if(!evento.target.closest(".buscador")){cerrarDesplegable();}
-});
-
-function cerrarDesplegable(){
-    porId("desplegable").classList.remove("visible");
-}
-
-function normalizarResultado(item){
-    return {
-        numero:String(item.numeroColab??item.NumeroUsuario??item.numero??"").trim(),
-        nombre:String(item.nombreCompleto??item.Title??item.nombre??"").trim(),
-        marca:String(item.marca??item.Marca??"").trim(),
-        sucursal:String(item.sucursal??item.Sucursal??"").trim()
-    };
-}
-
-function obtenerListaResultados(datos){
-    const lista=datos.resultados??datos.usuarios??datos.value??[];
-    return Array.isArray(lista)?lista.map(normalizarResultado).filter(x=>x.numero).slice(0,15):[];
-}
-
-function renderizarSugerencias(lista){
-    const desplegable=porId("desplegable");
-    resultadosBusqueda=lista.slice(0,15);
-    if(!resultadosBusqueda.length){
-        desplegable.innerHTML='<div class="sin-resultados">Sin coincidencias</div>';
-        desplegable.classList.add("visible");
-        return;
-    }
-    desplegable.innerHTML=resultadosBusqueda.map(function(usuario,indice){
-        return '<button class="resultado-opcion" type="button" data-indice="'+indice+'">'+escaparHTML(usuario.numero+' - '+usuario.nombre)+'</button>';
-    }).join("");
-    desplegable.classList.add("visible");
-    desplegable.querySelectorAll(".resultado-opcion").forEach(function(boton){
-        boton.addEventListener("click",function(){
-            seleccionarUsuario(resultadosBusqueda[Number(boton.dataset.indice)]);
-            cerrarDesplegable();
-        });
-    });
-}
-
-async function buscarSugerencias(consulta){
-    ocultarMensaje("mensajeBusqueda");
-    if(!validarURL(URL_BUSCAR_USUARIO)){
-        mostrarMensaje("mensajeBusqueda","Configura URL_BUSCAR_USUARIO dentro del código HTML.","error");
-        return;
-    }
-    if(controladorBusqueda){controladorBusqueda.abort();}
-    controladorBusqueda=new AbortController();
-    porId("desplegable").innerHTML='<div class="buscando-resultados">Buscando coincidencias...</div>';
-    porId("desplegable").classList.add("visible");
-    try{
-        const r=await fetch(URL_BUSCAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"sugerir",consulta:consulta,limite:15}),signal:controladorBusqueda.signal});
-        const d=await leerJSON(r);
-        if(!r.ok)throw new Error(d.mensaje||`HTTP ${r.status}`);
-        renderizarSugerencias(obtenerListaResultados(d));
-    }catch(e){
-        if(e.name!=="AbortError"){
-            cerrarDesplegable();
-            mostrarMensaje("mensajeBusqueda",`No fue posible consultar el catálogo: ${e.message}`,"error");
-        }
-    }
-}
-
-async function buscarUsuario(){
-    ocultarMensaje("mensajeBusqueda");
-    const numero=porId("busqueda").value.trim();
-    if(!numero)return mostrarMensaje("mensajeBusqueda","Captura el número de colaborador.","error");
-    if(!validarURL(URL_BUSCAR_USUARIO))return mostrarMensaje("mensajeBusqueda","Configura URL_BUSCAR_USUARIO dentro del código HTML.","error");
-    cerrarDesplegable();
-    porId("buscar").disabled=true;
-    try{
-        const r=await fetch(URL_BUSCAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"buscar",consulta:numero})});
-        const d=await leerJSON(r);
-        if(!r.ok)throw new Error(d.mensaje||`HTTP ${r.status}`);
-        if(d.encontrado){
-            seleccionarUsuario(normalizarResultado(d));
-        }else{
-            usuarioActual=null;
-            porId("usuarioEncontrado").classList.add("oculto");
-            porId("usuarioNoEncontrado").classList.remove("oculto");
-            porId("regNumero").value=numero;
-            actualizarCarga();
-        }
-    }catch(e){mostrarMensaje("mensajeBusqueda",`No fue posible consultar el catálogo: ${e.message}`,"error")}
-    finally{porId("buscar").disabled=false}
-}
-porId("buscar").onclick=buscarUsuario;
-porId("busqueda").addEventListener("keydown",e=>{if(e.key==="Enter")buscarUsuario()});
-
-function seleccionarUsuario(usuario,nuevo=false){
-    usuarioActual=usuario;
-    porId("busqueda").value=usuario.numero+" - "+usuario.nombre;
-    porId("datoNombre").textContent=usuario.nombre||"Sin nombre registrado";
-    porId("datoMarca").textContent=usuario.marca;
-    porId("datoSucursal").textContent=usuario.sucursal;
-    porId("mensajeEncontrado").textContent=nuevo?"Usuario registrado correctamente":"Colaborador localizado";
-    porId("usuarioEncontrado").classList.remove("oculto");
-    porId("usuarioNoEncontrado").classList.add("oculto");
-    actualizarCarga();
-}
-
-porId("guardarUsuario").onclick=async()=>{ocultarMensaje("mensajeRegistro");const u={numero:porId("regNumero").value.trim(),nombre:porId("regNombre").value.trim(),marca:porId("regMarca").value,sucursal:porId("regSucursal").value.trim(),gerente:porId("regGerente").value.trim(),telefonoGerente:porId("regTelefonoGerente").value.trim()};if(Object.values(u).some(v=>!v))return mostrarMensaje("mensajeRegistro","Completa todos los campos obligatorios.","error");if(u.telefonoGerente.length<10)return mostrarMensaje("mensajeRegistro","El teléfono debe contener al menos 10 dígitos.","error");if(!validarURL(URL_REGISTRAR_USUARIO))return mostrarMensaje("mensajeRegistro","Configura URL_REGISTRAR_USUARIO dentro del código HTML.","error");porId("guardarUsuario").disabled=true;try{const r=await fetch(URL_REGISTRAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"registrar",numeroColab:u.numero,nombreCompleto:u.nombre,marca:u.marca,sucursal:u.sucursal,gerente:u.gerente,telefonoGerente:u.telefonoGerente})});const d=await leerJSON(r);if(!r.ok&&r.status!==409)throw new Error(d.mensaje||`HTTP ${r.status}`);if(r.status===409)return mostrarMensaje("mensajeRegistro",d.mensaje||"El número ya está registrado.","error");seleccionarUsuario({numero:u.numero,nombre:u.nombre.toUpperCase(),marca:u.marca,sucursal:u.sucursal.toUpperCase()},true)}catch(e){mostrarMensaje("mensajeRegistro",`No fue posible registrar: ${e.message}`,"error")}finally{porId("guardarUsuario").disabled=false}};
-
-function actualizarCarga(){const listo=Boolean(usuarioActual);porId("avisoSinUsuario").classList.toggle("oculto",listo);porId("cargaActiva").classList.toggle("oculto",!listo);if(listo){porId("resumenNumero").textContent=`Número: ${usuarioActual.numero}`;porId("resumenMarca").textContent=`Marca: ${usuarioActual.marca}`;porId("resumenSucursal").textContent=`Sucursal: ${usuarioActual.sucursal}`;renderizarArchivos()}}
-function extensionDe(nombre){const p=String(nombre).toLowerCase().split(".");return p.length>1?p.pop():""}
-function archivoPermitido(a){const ext=extensionDe(a.name);return extensionesPermitidas.includes(ext)&&(tiposPermitidos.includes(a.type)||a.type==="")}
-function archivoDuplicado(a){return archivosSeleccionados.some(x=>x.name===a.name&&x.size===a.size&&x.lastModified===a.lastModified)}
-function nombreEstimado(a,indice){if(!usuarioActual)return"";const objetivo=pascalCase(porId("objetivoImagenes").value);const sufijo=indice===0?"":`_${indice+1}`;return`${usuarioActual.numero}_${pascalCase(usuarioActual.marca)}_${pascalCase(usuarioActual.sucursal)}_${objetivo}${sufijo}.${extensionDe(a.name)}`}
-porId("objetivoImagenes").addEventListener("input",renderizarArchivos);porId("seleccionarImagenes").onclick=()=>porId("inputArchivos").click();
-porId("inputArchivos").addEventListener("change",e=>{ocultarMensaje("mensajeArchivos");const recibidos=Array.from(e.target.files),rechazados=[],duplicados=[];recibidos.forEach(a=>{if(!archivoPermitido(a))rechazados.push(a.name);else if(archivoDuplicado(a))duplicados.push(a.name);else archivosSeleccionados.push(a)});e.target.value="";if(rechazados.length)mostrarMensaje("mensajeArchivos",`Se rechazaron ${rechazados.length} archivo(s). Solo se permiten JPG, JPEG, PNG y WEBP.`,"error");else if(duplicados.length)mostrarMensaje("mensajeArchivos",`Se omitieron ${duplicados.length} archivo(s) ya seleccionados.`,"error");renderizarArchivos()});
-function renderizarArchivos(){porId("listaArchivos").classList.toggle("oculto",!archivosSeleccionados.length);porId("contadorArchivos").textContent=archivosSeleccionados.length;porId("subirImagenes").disabled=!archivosSeleccionados.length;porId("archivos").innerHTML=archivosSeleccionados.map((a,i)=>`<div class="archivo"><div class="archivo-info"><b>${escaparHTML(a.name)}</b><span>${extensionDe(a.name).toUpperCase()} · ${(a.size/1024/1024).toFixed(2)} MB</span><em>Nombre estimado: ${escaparHTML(nombreEstimado(a,i))}</em></div><button class="eliminar" type="button" data-indice="${i}">Eliminar</button></div>`).join("");porId("archivos").querySelectorAll(".eliminar").forEach(b=>b.onclick=()=>{archivosSeleccionados.splice(Number(b.dataset.indice),1);renderizarArchivos()})}
 function leerDataUri(a){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(new Error(`No se pudo leer ${a.name}`));r.readAsDataURL(a)})}
-function mostrarResultadoFinal(exitosos,total){const e=porId("resultadoFinal");e.classList.add("visible");if(exitosos===total){e.className="resultado-final visible exito";e.textContent=`Carga completada: ${exitosos} de ${total} imágenes guardadas correctamente.`}else{e.className="resultado-final visible error";e.textContent=exitosos?`Carga incompleta: ${exitosos} de ${total} imágenes guardadas.`:`Carga fallida: ninguna imagen pudo guardarse.`}}
+porId("subirImagenes").onclick=async()=>{
+  ocultarMensaje("mensajeArchivos");
 
-porId("subirImagenes").onclick=async()=>{const objetivoOriginal=porId("objetivoImagenes").value.trim(),objetivo=pascalCase(objetivoOriginal);if(!objetivo)return mostrarMensaje("mensajeArchivos","Captura el asunto de las imágenes.","error");if(!validarURL(URL_SUBIR_IMAGEN))return mostrarMensaje("mensajeArchivos","Configura URL_SUBIR_IMAGEN dentro del código HTML.","error");porId("subirImagenes").disabled=true;porId("resultadoFinal").className="resultado-final";porId("progreso").classList.add("visible");let exitosos=0;for(let i=0;i<archivosSeleccionados.length;i++){const a=archivosSeleccionados[i];porId("textoProgreso").textContent=`Enviando ${i+1} de ${archivosSeleccionados.length}`;porId("avance").style.width=`${Math.round(i/archivosSeleccionados.length*100)}%`;try{const data=await leerDataUri(a);const payload={numeroColab:usuarioActual.numero,marcaArchivo:pascalCase(usuarioActual.marca),sucursalArchivo:pascalCase(usuarioActual.sucursal),nombreOriginal:a.name,nombreDeseado:objetivoOriginal,nombreDeseadoArchivo:objetivo,extension:extensionDe(a.name),tipoMime:a.type||({jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp"}[extensionDe(a.name)]),contenidoDataUri:data};const r=await fetch(URL_SUBIR_IMAGEN,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});const d=await leerJSON(r);if(r.ok&&d.guardado!==false)exitosos++}catch(e){} }porId("avance").style.width="100%";porId("textoProgreso").textContent="Proceso finalizado";mostrarResultadoFinal(exitosos,archivosSeleccionados.length);porId("subirImagenes").disabled=false};
+  if(!sucursalGeneral.trim()){
+    return mostrarMensaje("mensajeArchivos","error","Captura la sucursal que se aplicará a todos los lotes.");
+  }
+
+  if(!lotes.length||lotes.some(l=>!l.asunto.trim()||!l.archivos.length)){
+    return mostrarMensaje("mensajeArchivos","error","Cada lote debe tener un asunto y al menos una imagen.");
+  }
+
+  if(!validarURL(URL_SUBIR_IMAGEN)){
+    return mostrarMensaje("mensajeArchivos","error","Configura URL_SUBIR_IMAGEN.");
+  }
+
+  porId("subirImagenes").disabled=true;
+  porId("agregarLote").disabled=true;
+  porId("progreso").classList.add("visible");
+  porId("resultadoFinal").className="resultado-final";
+
+  const total=lotes.reduce((n,l)=>n+l.archivos.length,0);
+  let procesadas=0;
+  let exitosas=0;
+  const errores=[];
+
+  /*
+    Se recorre primero cada batch y después cada imagen.
+    Cada archivo genera una solicitud POST independiente para conservar
+    el contrato original del flujo de Power Automate.
+  */
+  for(let batchIndex=0;batchIndex<lotes.length;batchIndex++){
+    const lote=lotes[batchIndex];
+
+    for(let imagenIndex=0;imagenIndex<lote.archivos.length;imagenIndex++){
+      const archivo=lote.archivos[imagenIndex];
+      const numeroGlobal=procesadas+1;
+      const nombreFinal=nombreEstimado(lote,archivo,imagenIndex);
+
+      porId("textoProgreso").textContent=`Enviando imagen ${numeroGlobal} de ${total} · Lote ${batchIndex+1} de ${lotes.length}`;
+      porId("avance").style.width=`${Math.round(procesadas/total*100)}%`;
+
+      try{
+        const contenidoDataUri=await leerDataUri(archivo);
+
+        /*
+          Payload unitario compatible con el flujo anterior.
+          Los campos batch y totalBatches son informativos y pueden
+          ignorarse en Power Automate si el esquema permite adicionales.
+        */
+        const payload={
+          numeroColab:usuarioActual.numero,
+          nombreCompleto:usuarioActual.nombre,
+          marca:usuarioActual.marca,
+          marcaArchivo:pascalCase(usuarioActual.marca),
+          sucursal:sucursalGeneral.trim(),
+          sucursalArchivo:pascalCase(sucursalGeneral),
+          nombreOriginal:archivo.name,
+          nombreDeseado:lote.asunto.trim(),
+          nombreDeseadoArchivo:pascalCase(lote.asunto),
+          nombreFinal:nombreFinal,
+          extension:extensionDe(archivo.name),
+          tipoMime:archivo.type||({jpg:"image/jpeg",jpeg:"image/jpeg",png:"image/png",webp:"image/webp"}[extensionDe(archivo.name)]||"application/octet-stream"),
+          contenidoDataUri:contenidoDataUri,
+          batch:batchIndex+1,
+          totalBatches:lotes.length,
+          indice:imagenIndex+1,
+          totalImagenesBatch:lote.archivos.length,
+          indiceGlobal:numeroGlobal,
+          totalImagenes:total
+        };
+
+        const respuesta=await fetch(URL_SUBIR_IMAGEN,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify(payload)
+        });
+
+        const datos=await leerJSON(respuesta);
+
+        if(!respuesta.ok||datos.guardado===false){
+          throw new Error(datos.mensaje||`HTTP ${respuesta.status}`);
+        }
+
+        exitosas++;
+      }catch(error){
+        console.error("Error al subir",nombreFinal,error);
+        errores.push(`${nombreFinal}: ${error.message}`);
+      }
+
+      procesadas++;
+      porId("avance").style.width=`${Math.round(procesadas/total*100)}%`;
+    }
+  }
+
+  porId("textoProgreso").textContent=`Proceso finalizado: ${exitosas} de ${total} imágenes guardadas.`;
+  porId("agregarLote").disabled=false;
+
+  if(exitosas===total){
+    porId("pestanas").classList.add("oculto");
+    porId("panelUsuarios").classList.remove("activo");
+    porId("panelImagenes").classList.remove("activo");
+    porId("final").classList.add("visible");
+    window.scrollTo({top:0,behavior:"smooth"});
+  }else{
+    porId("subirImagenes").disabled=false;
+    mostrarMensaje(
+      "mensajeArchivos",
+      "error",
+      `Se guardaron ${exitosas} de ${total} imágenes. Fallaron ${errores.length}. Primer error: ${errores[0]||"Error no identificado"}`
+    );
+  }
+};
 actualizarCarga();
 </script>
 </body>
