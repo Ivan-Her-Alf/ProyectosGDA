@@ -8,8 +8,7 @@
 :root{--azul:#108EC3;--turquesa:#16A2AD;--menta:#4CB88E;--verde:#5AAE71;--lima:#92BC48;--lima2:#B0C002;--texto:#173444;--muted:#60747E;--blanco:#fff;--borde:#DDE9EA}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{min-height:100vh;margin:0;padding:32px 16px;font-family:Arial,Helvetica,sans-serif;color:var(--texto);background-color:#F5FAFA;background-image:radial-gradient(circle at 0 0,rgba(16,142,195,.14),transparent 34%),radial-gradient(circle at 100% 100%,rgba(176,192,2,.15),transparent 36%),linear-gradient(145deg,#F7FCFD 0%,#F4FAF7 52%,#FAFCEB 100%)}
 .tarjeta{width:100%;max-width:760px;margin:auto;overflow:hidden;background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.85);border-radius:28px;box-shadow:0 24px 70px rgba(16,142,195,.14)}
-.barra{height:8px;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--lima),var(--lima2))}.interior{padding:36px}.encabezado{text-align:center}.insignia{display:inline-flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.titulo{max-width:650px;margin:20px auto 0;color:var(--texto);font-size:30px;line-height:1.22;text-align:center;scroll-margin-top:20px;outline:none}.subtitulo{max-width:600px;margin:12px auto 0;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}.contenido{margin-top:32px;padding:24px;const CATALOGOS_URL =
-background:rgba(248,250,252,.72);border-radius:24px}.fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grupo{margin-bottom:18px}.etiqueta{display:block;margin-bottom:7px;color:var(--texto);font-size:14px;font-weight:600}.req{color:var(--azul)}.campo{width:100%;padding:13px 14px;background:#fff;color:var(--texto);border:1px solid var(--borde);border-radius:12px;font:14px Arial;outline:none;transition:.2s}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.10)}textarea.campo{min-height:120px;resize:vertical;line-height:1.5}
+.barra{height:8px;background:linear-gradient(90deg,var(--azul),var(--turquesa),var(--menta),var(--lima),var(--lima2))}.interior{padding:36px}.encabezado{text-align:center}.insignia{display:inline-flex;align-items:center;gap:8px;margin:0;padding:9px 16px;border-radius:999px;background:rgba(22,162,173,.09);color:var(--turquesa);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase}.titulo{max-width:650px;margin:20px auto 0;color:var(--texto);font-size:30px;line-height:1.22;text-align:center;scroll-margin-top:20px;outline:none}.subtitulo{max-width:600px;margin:12px auto 0;color:var(--muted);font-size:14px;line-height:1.6;text-align:center}.contenido{margin-top:32px;padding:24px;background:rgba(248,250,252,.72);border-radius:24px}.fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grupo{margin-bottom:18px}.etiqueta{display:block;margin-bottom:7px;color:var(--texto);font-size:14px;font-weight:600}.req{color:var(--azul)}.campo{width:100%;padding:13px 14px;background:#fff;color:var(--texto);border:1px solid var(--borde);border-radius:12px;font:14px Arial;outline:none;transition:.2s}.campo:focus{border-color:var(--turquesa);box-shadow:0 0 0 4px rgba(22,162,173,.10)}textarea.campo{min-height:120px;resize:vertical;line-height:1.5}
 .pregunta{margin:0 0 20px;padding:18px;background:#fff;border:1px solid #EEF3F4;border-radius:16px;box-shadow:0 3px 12px rgba(23,52,68,.05)}.texto-pregunta{margin:0 0 15px;color:var(--texto);font-size:14px;font-weight:600;line-height:1.5}.opciones{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.opcion{position:relative}.opcion input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.opcion label{min-height:78px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:10px 5px;background:#F7FAFA;color:#526B76;border:1px solid #E3ECEE;border-radius:12px;font-size:11px;line-height:1.25;text-align:center;cursor:pointer;transition:.2s}.opcion label:hover{background:#fff;border-color:var(--turquesa);transform:translateY(-1px)}.opcion input:checked+label{background:linear-gradient(135deg,var(--azul),var(--turquesa));color:#fff;border-color:var(--turquesa);box-shadow:0 6px 14px rgba(16,142,195,.20)}.numero{display:block;margin-bottom:5px;color:var(--azul);font-size:20px;font-weight:700}.opcion input:checked+label .numero{color:#fff}
 .escala5{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.escala5 .opcion label{min-height:82px}.escala5 .opcion input:checked+label{background:linear-gradient(135deg,var(--menta),var(--verde));border-color:var(--verde)}.escala5 .opcion input:checked+label .numero{color:#fff}.texto-mini{font-size:9px;line-height:1.25}
 .comentarios{margin-top:22px;padding:18px;background:#fff;border:1px solid #DCEBED;border-radius:16px}.comentarios-titulo{margin:0 0 14px;font-size:14px;font-weight:700;line-height:1.5}.si-no{display:grid;grid-template-columns:repeat(2,minmax(100px,150px));gap:10px;margin-bottom:0}.si-no .opcion label{min-height:48px;flex-direction:row;font-size:14px;font-weight:700}.comentario-caja{margin-top:16px}.ayuda{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
@@ -31,11 +30,6 @@ const FLOW_URL = "https://default226a5b51d2894b31be72824bcc61e8.91.environment.a
 */
 const CATALOGOS_URL = "https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/16ef6d535ebb4df38fe9bc4098c844f0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CShd6BPT2DtDk_UJkqE_A-uufFFM87l3fgRZhZ6XZTU";
 
-function construirUrlCatalogo(catalogo){
-  const url=new URL(CATALOGOS_URL);
-  url.searchParams.set('catalogo',catalogo);
-  return url.toString();
-}
 const secciones=[
 {clave:'datos',titulo:'Datos del colaborador',subtitulo:'Completa tus datos para comenzar.'},
 {clave:'reclutamiento',titulo:'Cuéntanos cómo fue tu experiencia al iniciar tu proceso.',subtitulo:''},
@@ -84,17 +78,20 @@ async function agregarDesplegable(id,label,key,catalogo){
     respuestas[key]=e.target.value;
   });
 
-  if(!CATALOGOS_URL||CATALOGOS_URL.includes('https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/16ef6d535ebb4df38fe9bc4098c844f0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CShd6BPT2DtDk_UJkqE_A-uufFFM87l3fgRZhZ6XZTU')){
+  if(!CATALOGOS_URL||CATALOGOS_URL.includes('PEGA_AQUI')){
     select.innerHTML='<option value="">Configura la URL del catálogo</option>';
     estado.textContent='Falta configurar la URL del flujo de catálogos.';
     return;
   }
 
   try{
-    const url=construirUrlCatalogo(catalogo);
-    const r=await fetch(url,{
-      method:'GET',
-      headers:{'Accept':'application/json'},
+    const r=await fetch(CATALOGOS_URL,{
+      method:'POST',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({catalogo:catalogo}),
       cache:'no-store'
     });
 
@@ -140,5 +137,3 @@ render();
 </script>
 </body>
 </html>
-</html>
-
