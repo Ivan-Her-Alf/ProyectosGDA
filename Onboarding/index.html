@@ -84,7 +84,7 @@ async function agregarDesplegable(id,label,key,catalogo){
     respuestas[key]=e.target.value;
   });
 
-  if(!CATALOGOS_URL||CATALOGOS_URL.includes('PEGA_AQUI')){
+  if(!CATALOGOS_URL||CATALOGOS_URL.includes('https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/18/workflows/16ef6d535ebb4df38fe9bc4098c844f0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=CShd6BPT2DtDk_UJkqE_A-uufFFM87l3fgRZhZ6XZTU')){
     select.innerHTML='<option value="">Configura la URL del catálogo</option>';
     estado.textContent='Falta configurar la URL del flujo de catálogos.';
     return;
