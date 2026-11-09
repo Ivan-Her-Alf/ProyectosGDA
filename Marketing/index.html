@@ -12,7 +12,7 @@
 </head>
 <body>
 <main class="tarjeta"><div class="barra"></div><div class="interior">
-<header class="encabezado"><div class="etiqueta">Recepción de evidencias</div><h1>Registro y carga de imágenes</h1><p>Identifica al colaborador y carga varios lotes de imágenes con asuntos y sucursales diferentes en una sola solicitud.</p></header>
+<header class="encabezado"><div class="etiqueta">Recepción de evidencias</div><h1>Registro y carga de imágenes</h1><p>Identifica al colaborador y carga varios lotes de imágenes. Todos los lotes comparten la misma sucursal y cada imagen se envía y registra individualmente.</p></header>
 <nav id="pestanas" class="pestanas"><button id="tabUsuarios" class="pestana activa" type="button">Identificación y registro</button><button id="tabImagenes" class="pestana" type="button">Subir imágenes</button></nav>
 <section id="panelUsuarios" class="panel activo">
 <div class="icono">&#128269;</div><h2>Buscar colaborador</h2><p class="descripcion">Captura el número de colaborador.</p>
@@ -27,7 +27,7 @@
 <div id="mensajeBusqueda" class="mensaje"></div>
 </section>
 <section id="panelImagenes" class="panel">
-<div class="icono" style="color:var(--verde);background:rgba(76,184,142,.12)">&#8679;</div><h2>Subir imágenes por lotes</h2><p class="descripcion">Cada lote puede tener un asunto y una sucursal diferentes.</p>
+<div class="icono" style="color:var(--verde);background:rgba(76,184,142,.12)">&#8679;</div><h2>Subir imágenes por lotes</h2><p class="descripcion">Todos los lotes comparten la misma sucursal y cada lote puede tener un asunto diferente.</p>
 <div id="avisoSinUsuario" class="estado aviso">Primero identifica o registra al colaborador.<br><button id="irIdentificacion" class="cambiar" type="button">Ir a identificación</button></div>
 <div id="cargaActiva" class="oculto"><div class="resumen"><div><small>DATOS DEL COLABORADOR</small><div class="resumen-datos"><span id="resumenNumero"></span><span id="resumenNombre"></span><span id="resumenMarca"></span></div></div><button id="cambiarUsuario" class="cambiar" type="button">Cambiar</button></div>
 <div class="grupo"><label for="sucursalGeneral">Sucursal para todos los lotes <span class="requerido">*</span></label><input id="sucursalGeneral" class="campo" type="text" maxlength="120" autocomplete="organization" placeholder="Ej. Montes Urales"></div>
@@ -37,12 +37,13 @@
 <button id="subirImagenes" class="boton" type="button">Subir todos los lotes</button><div id="resultadoFinal" class="resultado-final"></div></div>
 </section>
 <section id="final" class="final"><div class="check">✓</div><h2>¡Gracias por subir las evidencias!</h2><p>Las imágenes se procesaron correctamente. Puedes cerrar esta página.</p></section>
-<p class="nota">V4 · Carga de múltiples lotes en una sola solicitud</p>
+<p class="nota">V6 · Carga individual por imagen y registro independiente en tabla</p>
 </div></main>
 <script>
 const URL_BUSCAR_USUARIO="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/25/workflows/c8e6afbb7ae84417ba741cb7ed71a603/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ohRQ9POD3Kye5AYyf4rGhHoNUNSKnaOV2ngSw80PcmU";
 const URL_REGISTRAR_USUARIO="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/15/workflows/010b8841298744b090d58ee13d4b17c7/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=4KQYz4llhvzhCsOHcv3MBB4J2pcue7R02Vwpwy245ZM";
 const URL_SUBIR_IMAGEN="https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/01/workflows/a676ea14bbd34a23b75e5283ed72eb2f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=PRr4ShT86dfoTZWJiJuEaIIASO1ETrYkpomO-jpGzdM";
+const URL_REGISTRAR_IMAGEN="PEGA_AQUI_LA_URL_DEL_FLUJO_DE_REGISTRO_EN_TABLA";
 let usuarioActual=null, lotes=[], sucursalGeneral="", secuenciaLote=0, temporizadorBusqueda=null, controladorBusqueda=null, resultadosBusqueda=[];
 const extensionesPermitidas=["jpg","jpeg","png","webp"],tiposPermitidos=["image/jpeg","image/png","image/webp"];
 const porId=id=>document.getElementById(id);
@@ -63,7 +64,24 @@ async function buscarSugerencias(q){ocultarMensaje("mensajeBusqueda");if(control
 async function buscarUsuario(){const n=porId("busqueda").value.trim();if(!n)return mostrarMensaje("mensajeBusqueda","error","Captura el número de colaborador.");porId("buscar").disabled=true;try{const r=await fetch(URL_BUSCAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"buscar",consulta:n})});const d=await leerJSON(r);if(!r.ok)throw new Error(d.mensaje||`HTTP ${r.status}`);if(d.encontrado)seleccionarUsuario(normalizarResultado(d));else{usuarioActual=null;porId("usuarioEncontrado").classList.add("oculto");porId("usuarioNoEncontrado").classList.remove("oculto");porId("regNumero").value=n;actualizarCarga()}}catch(e){mostrarMensaje("mensajeBusqueda","error",`No fue posible consultar: ${e.message}`)}finally{porId("buscar").disabled=false}}
 porId("buscar").onclick=buscarUsuario;porId("busqueda").addEventListener("keydown",e=>{if(e.key==="Enter")buscarUsuario()});
 function seleccionarUsuario(u,nuevo=false){usuarioActual=u;porId("busqueda").value=u.numero+" - "+u.nombre;porId("datoNombre").textContent=u.nombre||"Sin nombre";porId("datoMarca").textContent=u.marca;porId("mensajeEncontrado").textContent=nuevo?"Usuario registrado correctamente":"Colaborador localizado";porId("usuarioEncontrado").classList.remove("oculto");porId("usuarioNoEncontrado").classList.add("oculto");actualizarCarga()}
-porId("guardarUsuario").onclick=async()=>{ocultarMensaje("mensajeRegistro");const u={numero:porId("regNumero").value.trim(),nombre:porId("regNombre").value.trim(),marca:porId("regMarca").value.trim(),telefonoGerente:porId("regTelefonoGerente").value.trim()};if(Object.values(u).some(v=>!v))return mostrarMensaje("mensajeRegistro","error","Completa todos los campos obligatorios.");if(u.telefonoGerente.length<10)return mostrarMensaje("mensajeRegistro","error","El teléfono debe contener al menos 10 dígitos.");porId("guardarUsuario").disabled=true;try{const r=await fetch(URL_REGISTRAR_USUARIO,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({accion:"registrar",numeroColab:u.numero,nombreCompleto:u.nombre,marca:u.marca,telefonoGerente:u.telefonoGerente})});const d=await leerJSON(r);if(!r.ok&&r.status!==409)throw new Error(d.mensaje||`HTTP ${r.status}`);if(r.status===409)return mostrarMensaje("mensajeRegistro","error",d.mensaje||"El número ya está registrado.");seleccionarUsuario({numero:u.numero,nombre:u.nombre.toUpperCase(),marca:u.marca.toUpperCase()},true)}catch(e){mostrarMensaje("mensajeRegistro","error",`No fue posible registrar: ${e.message}`)}finally{porId("guardarUsuario").disabled=false}};
+porId("guardarUsuario").onclick=async()=>{
+  ocultarMensaje("mensajeRegistro");
+  const u={numero:porId("regNumero").value.trim(),nombre:porId("regNombre").value.trim(),marca:porId("regMarca").value.trim(),telefonoGerente:porId("regTelefonoGerente").value.trim()};
+  if(!u.numero||!u.nombre||!u.marca||!u.telefonoGerente)return mostrarMensaje("mensajeRegistro","error","Completa todos los campos obligatorios.");
+  if(u.telefonoGerente.length<10)return mostrarMensaje("mensajeRegistro","error","El teléfono debe contener al menos 10 dígitos.");
+  const payloadRegistro={accion:"registrar",numeroColab:u.numero,nombreCompleto:u.nombre,marca:u.marca,telefonoGerente:u.telefonoGerente,sucursal:"",gerente:""};
+  porId("guardarUsuario").disabled=true;
+  porId("guardarUsuario").textContent="Guardando...";
+  try{
+    const r=await fetch(URL_REGISTRAR_USUARIO,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(payloadRegistro)});
+    const d=await leerJSON(r);
+    console.log("Respuesta registro usuario:",{status:r.status,body:d});
+    if(r.status===409)throw new Error(d.mensaje||"El número ya está registrado.");
+    if(!r.ok||d.guardado===false)throw new Error(d.mensaje||d.error?.message||`HTTP ${r.status}`);
+    seleccionarUsuario({numero:u.numero,nombre:u.nombre.toUpperCase(),marca:u.marca.toUpperCase()},true);
+  }catch(e){mostrarMensaje("mensajeRegistro","error",`No fue posible registrar: ${e.message}`)}
+  finally{porId("guardarUsuario").disabled=false;porId("guardarUsuario").textContent="Guardar usuario"}
+};
 function actualizarCarga(){const ok=Boolean(usuarioActual);porId("avisoSinUsuario").classList.toggle("oculto",ok);porId("cargaActiva").classList.toggle("oculto",!ok);if(ok){porId("resumenNumero").textContent=`Número: ${usuarioActual.numero}`;porId("resumenNombre").textContent=`Nombre: ${usuarioActual.nombre}`;porId("resumenMarca").textContent=`Marca: ${usuarioActual.marca}`;if(!lotes.length)agregarLote()}}
 function extensionDe(n){const p=String(n).toLowerCase().split(".");return p.length>1?p.pop():""}function archivoPermitido(a){const e=extensionDe(a.name);return extensionesPermitidas.includes(e)&&(tiposPermitidos.includes(a.type)||a.type==="")}
 function agregarLote(){secuenciaLote++;lotes.push({id:secuenciaLote,asunto:"",archivos:[]});renderizarLotes()}
@@ -94,6 +112,9 @@ porId("subirImagenes").onclick=async()=>{
 
   if(!validarURL(URL_SUBIR_IMAGEN)){
     return mostrarMensaje("mensajeArchivos","error","Configura URL_SUBIR_IMAGEN.");
+  }
+  if(!validarURL(URL_REGISTRAR_IMAGEN)){
+    return mostrarMensaje("mensajeArchivos","error","Configura URL_REGISTRAR_IMAGEN.");
   }
 
   porId("subirImagenes").disabled=true;
@@ -152,16 +173,38 @@ porId("subirImagenes").onclick=async()=>{
           totalImagenes:total
         };
 
-        const respuesta=await fetch(URL_SUBIR_IMAGEN,{
+        // Paso 1: crear físicamente la imagen con el flujo existente.
+        const respuestaCarga=await fetch(URL_SUBIR_IMAGEN,{
           method:"POST",
-          headers:{"Content-Type":"application/json"},
+          headers:{"Accept":"application/json","Content-Type":"application/json"},
           body:JSON.stringify(payload)
         });
+        const datosCarga=await leerJSON(respuestaCarga);
+        if(!respuestaCarga.ok||datosCarga.guardado===false){
+          throw new Error(datosCarga.mensaje||`Carga de imagen: HTTP ${respuestaCarga.status}`);
+        }
 
-        const datos=await leerJSON(respuesta);
-
-        if(!respuesta.ok||datos.guardado===false){
-          throw new Error(datos.mensaje||`HTTP ${respuesta.status}`);
+        // Paso 2: registrar únicamente los metadatos en la tabla.
+        const payloadRegistroImagen={
+          numeroColab:usuarioActual.numero,
+          nombreCompleto:usuarioActual.nombre,
+          marca:usuarioActual.marca,
+          sucursal:sucursalGeneral.trim(),
+          asuntoGeneral:lote.asunto.trim(),
+          nombreImg:nombreFinal,
+          batch:batchIndex+1,
+          indice:imagenIndex+1,
+          indiceGlobal:numeroGlobal
+        };
+        console.log("Registro en tabla:",payloadRegistroImagen);
+        const respuestaRegistro=await fetch(URL_REGISTRAR_IMAGEN,{
+          method:"POST",
+          headers:{"Accept":"application/json","Content-Type":"application/json"},
+          body:JSON.stringify(payloadRegistroImagen)
+        });
+        const datosRegistro=await leerJSON(respuestaRegistro);
+        if(!respuestaRegistro.ok||datosRegistro.guardado===false){
+          throw new Error(datosRegistro.mensaje||`La imagen se creó, pero el registro en tabla respondió con HTTP ${respuestaRegistro.status}`);
         }
 
         exitosas++;
