@@ -16,7 +16,6 @@
 <main class="tarjeta"><div class="barra"></div><div class="interior">
 <div id="formulario">
 <header class="encabezado"><p class="insignia">✦ Seguimiento RH · 30 días</p><h1 id="titulo" class="titulo" tabindex="-1"></h1><p id="subtitulo" class="subtitulo"></p></header>
-<div class="progreso-texto"><span id="pasoTexto"></span><span id="porcentajeTexto"></span></div><div class="progreso"><div id="avance" class="avance"></div></div>
 <section id="contenido" class="contenido"></section><div id="error" class="error"></div>
 <footer class="navegacion"><button id="anterior" class="boton anterior" type="button">← Anterior</button><button id="continuar" class="boton continuar" type="button">Continuar →</button></footer>
 </div>
@@ -46,11 +45,11 @@ const bloques={
  ]}
 };
 const secciones=[
- {clave:'datos',titulo:'Datos del colaborador',subtitulo:'Completa tus datos para iniciar el seguimiento de 30 días.'},
- {clave:'cultura',titulo:bloques.cultura.titulo,subtitulo:bloques.cultura.subtitulo},
- {clave:'integracion',titulo:bloques.integracion.titulo,subtitulo:bloques.integracion.subtitulo},
- {clave:'acompanamiento',titulo:bloques.acompanamiento.titulo,subtitulo:bloques.acompanamiento.subtitulo},
- {clave:'seguimiento',titulo:'Necesidades de seguimiento',subtitulo:'Estas respuestas permiten canalizar apoyos oportunos y confidenciales.'}
+ {clave:'datos',titulo:'Datos del colaborador',subtitulo:''},
+ {clave:'cultura',titulo:bloques.cultura.titulo,subtitulo:''},
+ {clave:'integracion',titulo:bloques.integracion.titulo,subtitulo:''},
+ {clave:'acompanamiento',titulo:bloques.acompanamiento.titulo,subtitulo:''},
+ {clave:'seguimiento',titulo:'Necesidades de seguimiento',subtitulo:''}
 ];
 let paso=0;
 const r={APaterno:'',AMaterno:'',Nombres:'',NumeroColab:'',Correo:'',NombreCompletoLider:'',q:{},S1:[],S1_COMENT:'',S2:'',S2_CAT:[],S2_COMENT:'',S3:[],S3_COMENT:'',S4:''};
@@ -65,24 +64,97 @@ function checks(nombre,opciones,seleccion){return `<div class="checks">${opcione
 function radios(nombre,opciones,valor){return `<div class="radios">${opciones.map((o,i)=>`<div class="opcion"><input type="radio" id="${nombre}_${i}" name="${nombre}" value="${esc(o)}" ${valor===o?'checked':''}><label for="${nombre}_${i}">${o}</label></div>`).join('')}</div>`}
 function valorChecks(nombre){return [...document.querySelectorAll(`[name="${nombre}"]:checked`)].map(x=>x.value)}
 function renderSeguimiento(){
- const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])<=2),liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);
- const cat1=['Valores y cultura','Código de conducta','Políticas internas','Prestaciones','Horarios y asistencia','Procesos administrativos','Protección de datos o confidencialidad','Estructura de la organización','Aplicación de la cultura en el trabajo diario','Otro'];
- const cat2=['Falta de información','Falta de acompañamiento','Comunicación del equipo','Trato recibido','Falta de herramientas o accesos','Organización del área','Horario o carga inicial','Cambio de responsable, sucursal o actividades','Otro'];
- const cat3=['Mayor claridad sobre mis actividades','Seguimiento más frecuente','Ayuda para priorizar','Respuesta a dudas','Retroalimentación','Mejor comunicación','Apoyo para integrarme al equipo','Atención a una situación de trato','Otro'];
+ const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])===1);
+ const liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);
+
+ const cat1=[
+  'Valores y cultura',
+  'Políticas internas',
+  'Prestaciones',
+  'Horarios y asistencia',
+  'Procesos administrativos',
+  'Protección de datos o confidencialidad',
+  'Estructura de la organización'
+ ];
+
+ const cat2=[
+  'Falta de acompañamiento',
+  'Problemas con el equipo',
+  'Organización del área',
+  'Falta de herramientas o accesos'
+ ];
+
+ const cat3=[
+  'Mayor claridad sobre mis actividades',
+  'Seguimiento más frecuente',
+  'Respuesta a dudas',
+  'Mejor comunicación',
+  'Apoyo para integrarme al equipo',
+  'Atención a una situación de trato'
+ ];
+
  contenido.innerHTML=`
- <div class="seguimiento ${culturaBaja?'':'oculto'}" id="bloqueS1"><h3>Aspectos culturales por reforzar</h3><p class="texto-pregunta">¿Qué aspecto necesitas comprender mejor? <span class="req">*</span></p>${checks('S1',cat1,r.S1)}<div class="grupo"><label class="etiqueta" for="S1_COMENT">Describe brevemente qué información o explicación necesitas <span class="req">*</span></label><textarea id="S1_COMENT" class="campo">${esc(r.S1_COMENT)}</textarea></div></div>
- <div class="seguimiento"><h3>Integración durante el primer mes</h3><p class="texto-pregunta">¿Durante tu primer mes ocurrió alguna situación que dificultara tu integración? <span class="req">*</span></p>${radios('S2',['No','Sí','Prefiero no responder'],r.S2)}<div id="detalleS2" class="${r.S2==='Sí'?'':'oculto'}"><div class="grupo"><label class="etiqueta">¿Con qué se relacionó principalmente? <span class="req">*</span></label>${checks('S2_CAT',cat2,r.S2_CAT)}</div><div class="grupo"><label class="etiqueta" for="S2_COMENT">Describe qué ocurrió y qué apoyo consideras necesario <span class="req">*</span></label><textarea id="S2_COMENT" class="campo">${esc(r.S2_COMENT)}</textarea></div></div></div>
- <div class="seguimiento ${liderBajo?'':'oculto'}" id="bloqueS3"><h3>Apoyo del responsable directo</h3><p class="texto-pregunta">¿Qué tipo de apoyo necesitas de tu responsable directo? <span class="req">*</span></p>${checks('S3',cat3,r.S3)}<div class="grupo"><label class="etiqueta" for="S3_COMENT">Describe el apoyo que tendría mayor impacto</label><textarea id="S3_COMENT" class="campo">${esc(r.S3_COMENT)}</textarea></div></div>
- <div class="seguimiento"><h3>Contacto confidencial</h3><p class="texto-pregunta">¿Te gustaría que una persona de RH se comunique contigo de manera confidencial? <span class="req">*</span></p>${radios('S4',['Sí','No','Aún no estoy seguro'],r.S4)}</div>`;
- document.querySelectorAll('[name="S1"]').forEach(x=>x.onchange=()=>r.S1=valorChecks('S1'));$('S1_COMENT')?.addEventListener('input',e=>r.S1_COMENT=e.target.value);
- document.querySelectorAll('[name="S2"]').forEach(x=>x.onchange=e=>{r.S2=e.target.value;if(r.S2!=='Sí'){r.S2_CAT=[];r.S2_COMENT=''}renderSeguimiento()});
- document.querySelectorAll('[name="S2_CAT"]').forEach(x=>x.onchange=()=>r.S2_CAT=valorChecks('S2_CAT'));$('S2_COMENT')?.addEventListener('input',e=>r.S2_COMENT=e.target.value);
- document.querySelectorAll('[name="S3"]').forEach(x=>x.onchange=()=>r.S3=valorChecks('S3'));$('S3_COMENT')?.addEventListener('input',e=>r.S3_COMENT=e.target.value);
+ <div class="seguimiento ${culturaBaja?'':'oculto'}" id="bloqueS1">
+  <p class="texto-pregunta">¿Qué aspecto necesitas comprender mejor? <span class="req">*</span></p>
+  ${checks('S1',cat1,r.S1)}
+  <div class="grupo">
+   <label class="etiqueta" for="S1_COMENT">Describe brevemente qué información o explicación necesitas <span class="req">*</span></label>
+   <textarea id="S1_COMENT" class="campo">${esc(r.S1_COMENT)}</textarea>
+  </div>
+ </div>
+
+ <div class="seguimiento">
+  <p class="texto-pregunta">¿Durante tu primer mes ocurrió alguna situación que dificultara tu integración? <span class="req">*</span></p>
+  ${radios('S2',['Sí','No'],r.S2)}
+  <div id="detalleS2" class="${r.S2==='Sí'?'':'oculto'}">
+   <div class="grupo">
+    <label class="etiqueta">Selecciona la situación relacionada <span class="req">*</span></label>
+    ${checks('S2_CAT',cat2,r.S2_CAT)}
+   </div>
+   <div class="grupo">
+    <label class="etiqueta" for="S2_COMENT">Describe qué ocurrió y qué apoyo consideras necesario <span class="req">*</span></label>
+    <textarea id="S2_COMENT" class="campo">${esc(r.S2_COMENT)}</textarea>
+   </div>
+  </div>
+ </div>
+
+ <div class="seguimiento ${liderBajo?'':'oculto'}" id="bloqueS3">
+  <p class="texto-pregunta">¿Qué tipo de apoyo necesitas de tu responsable directo? <span class="req">*</span></p>
+  ${checks('S3',cat3,r.S3)}
+  <div class="grupo">
+   <label class="etiqueta" for="S3_COMENT">Describe el apoyo que tendría mayor impacto</label>
+   <textarea id="S3_COMENT" class="campo">${esc(r.S3_COMENT)}</textarea>
+  </div>
+ </div>
+
+ <div class="seguimiento">
+  <p class="texto-pregunta">¿Te gustaría que una persona de RH se comunique contigo de manera confidencial? <span class="req">*</span></p>
+  ${radios('S4',['Sí','No'],r.S4)}
+ </div>`;
+
+ document.querySelectorAll('[name="S1"]').forEach(x=>x.onchange=()=>r.S1=valorChecks('S1'));
+ $('S1_COMENT')?.addEventListener('input',e=>r.S1_COMENT=e.target.value);
+
+ document.querySelectorAll('[name="S2"]').forEach(x=>x.onchange=e=>{
+  r.S2=e.target.value;
+  if(r.S2!=='Sí'){
+   r.S2_CAT=[];
+   r.S2_COMENT='';
+  }
+  renderSeguimiento();
+ });
+
+ document.querySelectorAll('[name="S2_CAT"]').forEach(x=>x.onchange=()=>r.S2_CAT=valorChecks('S2_CAT'));
+ $('S2_COMENT')?.addEventListener('input',e=>r.S2_COMENT=e.target.value);
+
+ document.querySelectorAll('[name="S3"]').forEach(x=>x.onchange=()=>r.S3=valorChecks('S3'));
+ $('S3_COMENT')?.addEventListener('input',e=>r.S3_COMENT=e.target.value);
+
  document.querySelectorAll('[name="S4"]').forEach(x=>x.onchange=e=>r.S4=e.target.value);
 }
-function validar(){const k=secciones[paso].clave;if(k==='datos')return r.APaterno.trim()&&r.AMaterno.trim()&&r.Nombres.trim()&&r.NumeroColab.trim()&&/^\S+@\S+\.\S+$/.test(r.Correo.trim())&&r.NombreCompletoLider.trim();if(bloques[k]){const b=bloques[k];return b.preguntas.every((_,i)=>r.q[b.inicio+i]>=1&&r.q[b.inicio+i]<=5)}if(k==='seguimiento'){const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])<=2),liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);if(culturaBaja&&(!r.S1.length||!r.S1_COMENT.trim()))return false;if(!r.S2)return false;if(r.S2==='Sí'&&(!r.S2_CAT.length||!r.S2_COMENT.trim()))return false;if(liderBajo&&!r.S3.length)return false;if(!r.S4)return false;return true}return true}
-function render(){error.classList.remove('visible');const s=secciones[paso];titulo.textContent=s.titulo;subtitulo.textContent=s.subtitulo;const pct=Math.round((paso+1)/secciones.length*100);$('pasoTexto').textContent=`Paso ${paso+1} de ${secciones.length}`;$('porcentajeTexto').textContent=`${pct}%`;$('avance').style.width=`${pct}%`;btnAnt.style.visibility=paso===0?'hidden':'visible';btnSig.textContent=paso===secciones.length-1?'Enviar respuestas':'Continuar →';btnSig.className=paso===secciones.length-1?'boton enviar':'boton continuar';({datos:renderDatos,cultura:()=>renderBloque('cultura'),integracion:()=>renderBloque('integracion'),acompanamiento:()=>renderBloque('acompanamiento'),seguimiento:renderSeguimiento}[s.clave])()}
-function payload(){const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])<=2),liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);const p={APaterno:r.APaterno.trim(),AMaterno:r.AMaterno.trim(),Nombres:r.Nombres.trim(),NumeroColab:r.NumeroColab.trim(),Correo:r.Correo.trim(),NombreCompletoLider:r.NombreCompletoLider.trim()};for(let i=1;i<=12;i++)p[`Q${i}`]=Number(r.q[i]);p.S1=culturaBaja?r.S1.join('; '):'';p.S1_COMENT=culturaBaja?r.S1_COMENT.trim():'';p.S2=r.S2;p.S2_CAT=r.S2==='Sí'?r.S2_CAT.join('; '):'';p.S2_COMENT=r.S2==='Sí'?r.S2_COMENT.trim():'';p.S3=liderBajo?r.S3.join('; '):'';p.S3_COMENT=liderBajo?r.S3_COMENT.trim():'';p.S4=r.S4;return p}
+function validar(){const k=secciones[paso].clave;if(k==='datos')return r.APaterno.trim()&&r.AMaterno.trim()&&r.Nombres.trim()&&r.NumeroColab.trim()&&/^\S+@\S+\.\S+$/.test(r.Correo.trim())&&r.NombreCompletoLider.trim();if(bloques[k]){const b=bloques[k];return b.preguntas.every((_,i)=>r.q[b.inicio+i]>=1&&r.q[b.inicio+i]<=5)}if(k==='seguimiento'){const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])===1),liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);if(culturaBaja&&(!r.S1.length||!r.S1_COMENT.trim()))return false;if(!r.S2)return false;if(r.S2==='Sí'&&(!r.S2_CAT.length||!r.S2_COMENT.trim()))return false;if(liderBajo&&!r.S3.length)return false;if(!r.S4)return false;return true}return true}
+function render(){error.classList.remove('visible');const s=secciones[paso];titulo.textContent=s.titulo;subtitulo.textContent=s.subtitulo;subtitulo.hidden=!s.subtitulo;btnAnt.style.visibility=paso===0?'hidden':'visible';btnSig.textContent=paso===secciones.length-1?'Enviar respuestas':'Continuar →';btnSig.className=paso===secciones.length-1?'boton enviar':'boton continuar';({datos:renderDatos,cultura:()=>renderBloque('cultura'),integracion:()=>renderBloque('integracion'),acompanamiento:()=>renderBloque('acompanamiento'),seguimiento:renderSeguimiento}[s.clave])()}
+function payload(){const culturaBaja=[1,2,3,4].some(n=>Number(r.q[n])===1),liderBajo=[9,10,11].some(n=>Number(r.q[n])<=2);const p={APaterno:r.APaterno.trim(),AMaterno:r.AMaterno.trim(),Nombres:r.Nombres.trim(),NumeroColab:r.NumeroColab.trim(),Correo:r.Correo.trim(),NombreCompletoLider:r.NombreCompletoLider.trim()};for(let i=1;i<=12;i++)p[`Q${i}`]=Number(r.q[i]);p.S1=culturaBaja?r.S1.join('; '):'';p.S1_COMENT=culturaBaja?r.S1_COMENT.trim():'';p.S2=r.S2;p.S2_CAT=r.S2==='Sí'?r.S2_CAT.join('; '):'';p.S2_COMENT=r.S2==='Sí'?r.S2_COMENT.trim():'';p.S3=liderBajo?r.S3.join('; '):'';p.S3_COMENT=liderBajo?r.S3_COMENT.trim():'';p.S4=r.S4;return p}
 async function enviar(){if(!FLOW_URL||FLOW_URL.includes('PEGA_AQUI'))throw new Error('Configura FLOW_URL antes de publicar.');const p=payload();console.log('Payload cultura Mes 1:',p);const resp=await fetch(FLOW_URL,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify(p)});const texto=await resp.text();let d={};if(texto){try{d=JSON.parse(texto)}catch{d={mensaje:texto}}}if(resp.status===409)throw new Error(d.mensaje||'Ya existe una respuesta para este colaborador.');if(!resp.ok||d.guardado===false)throw new Error(d.mensaje||`Power Automate respondió con HTTP ${resp.status}`);return d}
 btnSig.onclick=async()=>{if(!validar()){error.textContent='Completa todos los campos obligatorios y las preguntas de seguimiento visibles.';error.classList.add('visible');return}if(paso<secciones.length-1){paso++;render();titulo.scrollIntoView({behavior:'smooth',block:'start'});return}const t=btnSig.textContent;btnSig.disabled=true;btnSig.textContent='Enviando...';try{await enviar();$('formulario').hidden=true;$('final').hidden=false;window.scrollTo({top:0,behavior:'smooth'})}catch(e){error.textContent=`No fue posible registrar las respuestas. ${e.message}`;error.classList.add('visible');btnSig.disabled=false;btnSig.textContent=t}};
 btnAnt.onclick=()=>{if(paso>0){paso--;render();titulo.scrollIntoView({behavior:'smooth',block:'start'})}};
