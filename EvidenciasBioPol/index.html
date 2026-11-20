@@ -293,6 +293,70 @@
             color: #FFFFFF;
         }
 
+
+        /* Comentario condicional debajo de cada pregunta Likert */
+        .seguimiento-pregunta {
+            margin-top: 14px;
+            padding: 14px;
+            background-color: #FAF7F8;
+            border: 1px solid #E5D6DC;
+            border-radius: 10px;
+        }
+
+        .pregunta-seguimiento {
+            margin-bottom: 10px;
+            color: #333333;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .opciones-binarias {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .opcion-binaria input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .opcion-binaria label {
+            min-height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF;
+            color: #555555;
+            border: 1px solid #D8D8D8;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .opcion-binaria label:hover {
+            border-color: #7A2947;
+        }
+
+        .opcion-binaria input:checked + label {
+            background-color: #7A2947;
+            color: #FFFFFF;
+            border-color: #7A2947;
+        }
+
+        .comentario-condicional {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .comentario-condicional.visible {
+            display: block;
+        }
+
         .campo-comentarios {
             width: 100%;
             min-height: 110px;
@@ -583,8 +647,7 @@
         </h1>
 
         <div class="subtitulo">
-            Nos gustaría conocer cúal ha sido tu experiencia en tu día a día.
-            Registra tus datos, evalua tu experiencia general y, si tienes comentarios o evidencia fotográfica por favor anéxala, es muy importante conocer tu opinión.
+            Nos gustaría conocer cúal ha sido tu experiencia. Registra tus datos, evalua tu experiencia general, déjanos tus comentarios y, en caso de tenerla, envíanos tu evidencia fotográfica. Es muy importante conocer tu opinión.
         </div>
 
         <form id="formularioEvidencias">
@@ -725,102 +788,157 @@
 
             <!-- EVALUACIÓN -->
             <section class="seccion">
-
-                <div class="titulo-seccion">
-                    Evaluación
+                <div class="titulo-seccion">Evaluación</div>
+                <div class="bloque-pregunta">
+                    <div class="pregunta">
+                        <strong>1. Bienvenida y comunicación previa.</strong><br>
+                        ¿Qué tan satisfecho(a) te sentiste con la información y el acompañamiento recibidos antes del evento?
+                        <span class="obligatorio">*</span>
+                    </div>
+                    <div class="escala-likert">
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta1_1" name="pregunta1" value="1" required>
+                            <label for="pregunta1_1"><span class="numero">1</span>Muy insatisfecho(a)</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta1_2" name="pregunta1" value="2" >
+                            <label for="pregunta1_2"><span class="numero">2</span>Insatisfecho(a)</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta1_3" name="pregunta1" value="3" >
+                            <label for="pregunta1_3"><span class="numero">3</span>Neutral</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta1_4" name="pregunta1" value="4" >
+                            <label for="pregunta1_4"><span class="numero">4</span>Satisfecho(a)</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta1_5" name="pregunta1" value="5" >
+                            <label for="pregunta1_5"><span class="numero">5</span>Muy satisfecho(a)</label>
+                        </div>
+                    </div>
+                    <div class="seguimiento-pregunta">
+                        <div class="pregunta-seguimiento">
+                            ¿Tienes comentarios sobre la información y el acompañamiento previos al evento?
+                            <span class="obligatorio">*</span>
+                        </div>
+                        <div class="opciones-binarias">
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta1ComentarioNo" name="pregunta1ComentarioSiNo" value="No" required>
+                                <label for="pregunta1ComentarioNo">No</label>
+                            </div>
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta1ComentarioSi" name="pregunta1ComentarioSiNo" value="Si">
+                                <label for="pregunta1ComentarioSi">Sí</label>
+                            </div>
+                        </div>
+                        <div id="pregunta1ComentarioContenedor" class="comentario-condicional">
+                            <label for="pregunta1ComentarioTexto">Cuéntanos más <span class="obligatorio">*</span></label>
+                            <textarea id="pregunta1ComentarioTexto" class="campo-comentarios" maxlength="1000" placeholder="Escribe el comentario específico relacionado con esta pregunta."></textarea>
+                            <span id="pregunta1ComentarioContador" class="contador-caracteres">0 de 1000 caracteres</span>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="pregunta">
-                    Basándote en tu percepción,
-                    ¿cómo calificarías tu experiencia?
-                    <span class="obligatorio">*</span>
+                <div class="bloque-pregunta">
+                    <div class="pregunta">
+                        <strong>2. Experiencia durante el evento.</strong><br>
+                        ¿Cómo calificarías la organización y ejecución del evento?
+                        <span class="obligatorio">*</span>
+                    </div>
+                    <div class="escala-likert">
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta2_1" name="pregunta2" value="1" required>
+                            <label for="pregunta2_1"><span class="numero">1</span>Muy mala</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta2_2" name="pregunta2" value="2" >
+                            <label for="pregunta2_2"><span class="numero">2</span>Mala</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta2_3" name="pregunta2" value="3" >
+                            <label for="pregunta2_3"><span class="numero">3</span>Regular</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta2_4" name="pregunta2" value="4" >
+                            <label for="pregunta2_4"><span class="numero">4</span>Muy buena</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta2_5" name="pregunta2" value="5" >
+                            <label for="pregunta2_5"><span class="numero">5</span>Excelente</label>
+                        </div>
+                    </div>
+                    <div class="seguimiento-pregunta">
+                        <div class="pregunta-seguimiento">
+                            ¿Tienes comentarios sobre la organización y ejecución del evento?
+                            <span class="obligatorio">*</span>
+                        </div>
+                        <div class="opciones-binarias">
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta2ComentarioNo" name="pregunta2ComentarioSiNo" value="No" required>
+                                <label for="pregunta2ComentarioNo">No</label>
+                            </div>
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta2ComentarioSi" name="pregunta2ComentarioSiNo" value="Si">
+                                <label for="pregunta2ComentarioSi">Sí</label>
+                            </div>
+                        </div>
+                        <div id="pregunta2ComentarioContenedor" class="comentario-condicional">
+                            <label for="pregunta2ComentarioTexto">Cuéntanos más <span class="obligatorio">*</span></label>
+                            <textarea id="pregunta2ComentarioTexto" class="campo-comentarios" maxlength="1000" placeholder="Escribe el comentario específico relacionado con esta pregunta."></textarea>
+                            <span id="pregunta2ComentarioContador" class="contador-caracteres">0 de 1000 caracteres</span>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="escala-likert">
-
-                    <div class="opcion-likert">
-
-                        <input
-                            type="radio"
-                            id="calificacion1"
-                            name="calificacion"
-                            value="1"
-                            required
-                        >
-
-                        <label for="calificacion1">
-                            <span class="numero">1</span>
-                            Muy mala
-                        </label>
-
+                <div class="bloque-pregunta">
+                    <div class="pregunta">
+                        <strong>3. Cierre.</strong><br>
+                        ¿Cómo evaluarías la atención recibida durante toda la experiencia (considera logística previa al evento, alimentos, materiales y traslados)?
+                        <span class="obligatorio">*</span>
                     </div>
-
-                    <div class="opcion-likert">
-
-                        <input
-                            type="radio"
-                            id="calificacion2"
-                            name="calificacion"
-                            value="2"
-                        >
-
-                        <label for="calificacion2">
-                            <span class="numero">2</span>
-                            Mala
-                        </label>
-
+                    <div class="escala-likert">
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta3_1" name="pregunta3" value="1" required>
+                            <label for="pregunta3_1"><span class="numero">1</span>Muy mala</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta3_2" name="pregunta3" value="2" >
+                            <label for="pregunta3_2"><span class="numero">2</span>Mala</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta3_3" name="pregunta3" value="3" >
+                            <label for="pregunta3_3"><span class="numero">3</span>Regular</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta3_4" name="pregunta3" value="4" >
+                            <label for="pregunta3_4"><span class="numero">4</span>Muy buena</label>
+                        </div>
+                        <div class="opcion-likert">
+                            <input type="radio" id="pregunta3_5" name="pregunta3" value="5" >
+                            <label for="pregunta3_5"><span class="numero">5</span>Excelente</label>
+                        </div>
                     </div>
-
-                    <div class="opcion-likert">
-
-                        <input
-                            type="radio"
-                            id="calificacion3"
-                            name="calificacion"
-                            value="3"
-                        >
-
-                        <label for="calificacion3">
-                            <span class="numero">3</span>
-                            Regular
-                        </label>
-
+                    <div class="seguimiento-pregunta">
+                        <div class="pregunta-seguimiento">
+                            ¿Tienes comentarios sobre la atención recibida durante toda la experiencia?
+                            <span class="obligatorio">*</span>
+                        </div>
+                        <div class="opciones-binarias">
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta3ComentarioNo" name="pregunta3ComentarioSiNo" value="No" required>
+                                <label for="pregunta3ComentarioNo">No</label>
+                            </div>
+                            <div class="opcion-binaria">
+                                <input type="radio" id="pregunta3ComentarioSi" name="pregunta3ComentarioSiNo" value="Si">
+                                <label for="pregunta3ComentarioSi">Sí</label>
+                            </div>
+                        </div>
+                        <div id="pregunta3ComentarioContenedor" class="comentario-condicional">
+                            <label for="pregunta3ComentarioTexto">Cuéntanos más <span class="obligatorio">*</span></label>
+                            <textarea id="pregunta3ComentarioTexto" class="campo-comentarios" maxlength="1000" placeholder="Escribe el comentario específico relacionado con esta pregunta."></textarea>
+                            <span id="pregunta3ComentarioContador" class="contador-caracteres">0 de 1000 caracteres</span>
+                        </div>
                     </div>
-
-                    <div class="opcion-likert">
-
-                        <input
-                            type="radio"
-                            id="calificacion4"
-                            name="calificacion"
-                            value="4"
-                        >
-
-                        <label for="calificacion4">
-                            <span class="numero">4</span>
-                            Muy buena
-                        </label>
-
-                    </div>
-
-                    <div class="opcion-likert">
-
-                        <input
-                            type="radio"
-                            id="calificacion5"
-                            name="calificacion"
-                            value="5"
-                        >
-
-                        <label for="calificacion5">
-                            <span class="numero">5</span>
-                            Excelente
-                        </label>
-
-                    </div>
-
                 </div>
-
             </section>
 
             <!-- COMENTARIOS -->
@@ -833,14 +951,14 @@
                 <div class="grupo-campo">
 
                     <label for="comentarios">
-                        Comparte tus comentarios
+                        ¿Hay algo adicional que tienes que decirnos? ¡Déjanos conocerlo!.
                     </label>
 
                     <textarea
                         id="comentarios"
                         class="campo-comentarios"
                         maxlength="1000"
-                        placeholder="Escribe aquí tus comentarios, sugerencias o aspectos que consideres importantes."
+                        placeholder="Comparte tus comentarios."
                     ></textarea>
 
                     <span
@@ -911,423 +1029,122 @@
     </main>
 
     <script>
-        /*
-         * Sustituye el texto por la URL vigente
-         * de Power Automate.
-         */
-        const FLOW_URL =
-            "https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/01/workflows/ae587d78901a4e3f9b6c03bdd61a40a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gDlNI-JkT-8kGISG3-Qad7764e_CIp77QA_iOq_uDiU";
+        const FLOW_URL = "https://default226a5b51d2894b31be72824bcc61e8.91.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/01/workflows/ae587d78901a4e3f9b6c03bdd61a40a2/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=gDlNI-JkT-8kGISG3-Qad7764e_CIp77QA_iOq_uDiU";
+        const formulario = document.getElementById("formularioEvidencias");
+        const selectorArchivos = document.getElementById("files");
+        const campoComentarios = document.getElementById("comentarios");
 
-        const formulario =
-            document.getElementById("formularioEvidencias");
-
-        const selectorArchivos =
-            document.getElementById("files");
-
-        const campoComentarios =
-            document.getElementById("comentarios");
+        const preguntas = ["pregunta1", "pregunta2", "pregunta3"];
 
         function generarIdEnvio() {
-            if (
-                window.crypto &&
-                typeof window.crypto.randomUUID === "function"
-            ) {
-                return window.crypto.randomUUID();
-            }
-
-            return (
-                "ENV-" +
-                Date.now() +
-                "-" +
-                Math.random().toString(16).slice(2)
-            );
+            if (window.crypto && typeof window.crypto.randomUUID === "function") return window.crypto.randomUUID();
+            return "ENV-" + Date.now() + "-" + Math.random().toString(16).slice(2);
         }
 
         function obtenerFechaHoraCliente() {
-            const ahora = new Date();
-
-            const anio =
-                ahora.getFullYear();
-
-            const mes =
-                String(
-                    ahora.getMonth() + 1
-                ).padStart(2, "0");
-
-            const dia =
-                String(
-                    ahora.getDate()
-                ).padStart(2, "0");
-
-            const horas =
-                String(
-                    ahora.getHours()
-                ).padStart(2, "0");
-
-            const minutos =
-                String(
-                    ahora.getMinutes()
-                ).padStart(2, "0");
-
-            const segundos =
-                String(
-                    ahora.getSeconds()
-                ).padStart(2, "0");
-
-            return (
-                `${anio}-${mes}-${dia} ` +
-                `${horas}:${minutos}:${segundos}`
-            );
+            const a = new Date();
+            const p = n => String(n).padStart(2, "0");
+            return `${a.getFullYear()}-${p(a.getMonth()+1)}-${p(a.getDate())} ${p(a.getHours())}:${p(a.getMinutes())}:${p(a.getSeconds())}`;
         }
 
         async function convertirABase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-
-                reader.onload = () => {
-                    const contenidoBase64 =
-                        reader.result.split(",")[1];
-
-                    resolve(contenidoBase64);
-                };
-
-                reader.onerror = () => {
-                    reject(
-                        new Error(
-                            "No fue posible leer el archivo."
-                        )
-                    );
-                };
-
+                reader.onload = () => resolve(reader.result.split(",")[1]);
+                reader.onerror = () => reject(new Error("No fue posible leer el archivo."));
                 reader.readAsDataURL(file);
             });
         }
 
+        function actualizarCondicional(id) {
+            const seleccion = document.querySelector(`input[name="${id}ComentarioSiNo"]:checked`);
+            const contenedor = document.getElementById(`${id}ComentarioContenedor`);
+            const texto = document.getElementById(`${id}ComentarioTexto`);
+            const mostrar = seleccion && seleccion.value === "Si";
+            contenedor.classList.toggle("visible", mostrar);
+            texto.required = Boolean(mostrar);
+            if (!mostrar) { texto.value = ""; actualizarContadorPregunta(id); }
+        }
+
+        function actualizarContadorPregunta(id) {
+            const texto = document.getElementById(`${id}ComentarioTexto`);
+            document.getElementById(`${id}ComentarioContador`).textContent = `${texto.value.length} de 1000 caracteres`;
+        }
+
         function obtenerDatosFormulario() {
-            const calificacionSeleccionada =
-                document.querySelector(
-                    'input[name="calificacion"]:checked'
-                );
-
+            const valor = nombre => { const x=document.querySelector(`input[name="${nombre}"]:checked`); return x ? x.value : null; };
             return {
-                apellidoPaterno:
-                    document
-                        .getElementById("apellidoPaterno")
-                        .value
-                        .trim(),
-
-                apellidoMaterno:
-                    document
-                        .getElementById("apellidoMaterno")
-                        .value
-                        .trim(),
-
-                nombres:
-                    document
-                        .getElementById("nombres")
-                        .value
-                        .trim(),
-
-                numeroColaborador:
-                    document
-                        .getElementById("numeroColaborador")
-                        .value
-                        .trim(),
-
-                puesto:
-                    document
-                        .getElementById("puesto")
-                        .value
-                        .trim(),
-
-                marca:
-                    document
-                        .getElementById("marca")
-                        .value,
-
-                calificacion:
-                    calificacionSeleccionada
-                        ? Number(calificacionSeleccionada.value)
-                        : null,
-
-                comentarios:
-                    document
-                        .getElementById("comentarios")
-                        .value
-                        .trim()
+                apellidoPaterno: document.getElementById("apellidoPaterno").value.trim(),
+                apellidoMaterno: document.getElementById("apellidoMaterno").value.trim(),
+                nombres: document.getElementById("nombres").value.trim(),
+                numeroColaborador: document.getElementById("numeroColaborador").value.trim(),
+                puesto: document.getElementById("puesto").value.trim(),
+                marca: document.getElementById("marca").value,
+                pregunta1: valor("pregunta1") ? Number(valor("pregunta1")) : null,
+                pregunta1ComentarioSiNo: valor("pregunta1ComentarioSiNo"),
+                pregunta1Comentario: document.getElementById("pregunta1ComentarioTexto").value.trim(),
+                pregunta2: valor("pregunta2") ? Number(valor("pregunta2")) : null,
+                pregunta2ComentarioSiNo: valor("pregunta2ComentarioSiNo"),
+                pregunta2Comentario: document.getElementById("pregunta2ComentarioTexto").value.trim(),
+                pregunta3: valor("pregunta3") ? Number(valor("pregunta3")) : null,
+                pregunta3ComentarioSiNo: valor("pregunta3ComentarioSiNo"),
+                pregunta3Comentario: document.getElementById("pregunta3ComentarioTexto").value.trim(),
+                comentarios: campoComentarios.value.trim()
             };
         }
 
         function actualizarContadorComentarios() {
-            const contadorComentarios =
-                document.getElementById(
-                    "contadorComentarios"
-                );
-
-            contadorComentarios.textContent =
-                `${campoComentarios.value.length} ` +
-                `de 1000 caracteres`;
+            document.getElementById("contadorComentarios").textContent = `${campoComentarios.value.length} de 1000 caracteres`;
         }
 
         function actualizarArchivosSeleccionados() {
-            const texto =
-                document.getElementById(
-                    "archivosSeleccionados"
-                );
-
-            const archivos =
-                Array.from(selectorArchivos.files);
-
-            if (archivos.length === 0) {
-                texto.className =
-                    "archivos-seleccionados vacio";
-
-                texto.textContent =
-                    "No se han seleccionado archivos.";
-
-                return;
-            }
-
-            texto.className =
-                "archivos-seleccionados";
-
-            if (archivos.length === 1) {
-                texto.textContent =
-                    `Archivo seleccionado: ${archivos[0].name}`;
-
-                return;
-            }
-
-            const nombresArchivos =
-                archivos
-                    .slice(0, 3)
-                    .map(
-                        archivo => archivo.name
-                    )
-                    .join(", ");
-
-            const archivosAdicionales =
-                archivos.length > 3
-                    ? ` y ${archivos.length - 3} más`
-                    : "";
-
-            texto.textContent =
-                `${archivos.length} archivos seleccionados: ` +
-                `${nombresArchivos}${archivosAdicionales}`;
+            const texto=document.getElementById("archivosSeleccionados");
+            const archivos=Array.from(selectorArchivos.files);
+            if (!archivos.length) { texto.className="archivos-seleccionados vacio"; texto.textContent="No se han seleccionado archivos."; return; }
+            texto.className="archivos-seleccionados";
+            if (archivos.length===1) { texto.textContent=`Archivo seleccionado: ${archivos[0].name}`; return; }
+            const nombres=archivos.slice(0,3).map(a=>a.name).join(", ");
+            texto.textContent=`${archivos.length} archivos seleccionados: ${nombres}${archivos.length>3 ? ` y ${archivos.length-3} más` : ""}`;
         }
 
-        function mostrarError(mensaje) {
-            const resultado =
-                document.getElementById("resultado");
-
-            resultado.className = "error";
-            resultado.textContent = mensaje;
-        }
-
+        function mostrarError(mensaje) { const r=document.getElementById("resultado"); r.className="error"; r.textContent=mensaje; }
         async function enviarSolicitud(datos) {
-            const response = await fetch(FLOW_URL, {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(datos)
-            });
-
-            if (!response.ok) {
-                throw new Error(
-                    `Error HTTP: ${response.status}`
-                );
-            }
-
+            const response=await fetch(FLOW_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(datos)});
+            if(!response.ok) throw new Error(`Error HTTP: ${response.status}`);
             return response;
         }
 
-        campoComentarios.addEventListener(
-            "input",
-            actualizarContadorComentarios
-        );
+        preguntas.forEach(id => {
+            document.querySelectorAll(`input[name="${id}ComentarioSiNo"]`).forEach(op => op.addEventListener("change",()=>actualizarCondicional(id)));
+            document.getElementById(`${id}ComentarioTexto`).addEventListener("input",()=>actualizarContadorPregunta(id));
+        });
+        campoComentarios.addEventListener("input",actualizarContadorComentarios);
+        selectorArchivos.addEventListener("change",actualizarArchivosSeleccionados);
 
-        selectorArchivos.addEventListener(
-            "change",
-            actualizarArchivosSeleccionados
-        );
-
-        formulario.addEventListener(
-            "submit",
-
-            async function (evento) {
-                evento.preventDefault();
-
-                const resultado =
-                    document.getElementById("resultado");
-
-                const contador =
-                    document.getElementById("contador");
-
-                const boton =
-                    document.getElementById("btnEnviar");
-
-                const archivos =
-                    selectorArchivos.files;
-
-                resultado.textContent = "";
-                resultado.className = "";
-                contador.textContent = "";
-
-                if (!formulario.checkValidity()) {
-                    formulario.reportValidity();
-                    return;
+        formulario.addEventListener("submit", async evento => {
+            evento.preventDefault();
+            const resultado=document.getElementById("resultado"), contador=document.getElementById("contador"), boton=document.getElementById("btnEnviar"), archivos=selectorArchivos.files;
+            resultado.textContent=""; resultado.className=""; contador.textContent="";
+            if(!formulario.checkValidity()) { formulario.reportValidity(); return; }
+            if(!archivos.length) { mostrarError("Seleccione al menos una fotografía o video."); return; }
+            if(!FLOW_URL || FLOW_URL==="PEGA_AQUI_LA_NUEVA_URL_DE_POWER_AUTOMATE") { mostrarError("La dirección de Power Automate no está configurada."); return; }
+            const idEnvio=generarIdEnvio(), fechaCliente=obtenerFechaHoraCliente(), datos=obtenerDatosFormulario();
+            boton.disabled=true; boton.textContent="Enviando información...";
+            try {
+                contador.textContent="Registrando la información del participante...";
+                await enviarSolicitud({tipoSolicitud:"registro",idEnvio,fechaCliente,...datos,cantidadArchivos:archivos.length});
+                for(let i=0;i<archivos.length;i++) {
+                    const archivo=archivos[i]; contador.textContent=`Subiendo ${i+1} de ${archivos.length}: ${archivo.name}`;
+                    await enviarSolicitud({tipoSolicitud:"archivo",idEnvio,nombreArchivo:archivo.name,tipoArchivo:archivo.type,contenidoArchivo:await convertirABase64(archivo)});
                 }
+                contador.textContent=""; resultado.className="ok"; resultado.textContent="✓ Información y archivos enviados correctamente.";
+                formulario.reset(); preguntas.forEach(id=>{actualizarCondicional(id);actualizarContadorPregunta(id);}); actualizarArchivosSeleccionados(); actualizarContadorComentarios();
+            } catch(error) { contador.textContent=""; mostrarError("✖ No fue posible completar el envío. Intente nuevamente."); console.error(error); }
+            finally { boton.disabled=false; boton.textContent="Enviar información y archivos"; }
+        });
 
-                if (archivos.length === 0) {
-                    mostrarError(
-                        "Seleccione al menos una fotografía o video."
-                    );
-
-                    return;
-                }
-
-                if (
-                    !FLOW_URL ||
-                    FLOW_URL ===
-                        "PEGA_AQUI_LA_NUEVA_URL_DE_POWER_AUTOMATE"
-                ) {
-                    mostrarError(
-                        "La dirección de Power Automate no está configurada."
-                    );
-
-                    return;
-                }
-
-                const idEnvio =
-                    generarIdEnvio();
-
-                const fechaCliente =
-                    obtenerFechaHoraCliente();
-
-                const datosFormulario =
-                    obtenerDatosFormulario();
-
-                boton.disabled = true;
-                boton.textContent =
-                    "Enviando información...";
-
-                try {
-                    /*
-                     * Registro histórico para Excel.
-                     */
-                    contador.textContent =
-                        "Registrando la información del participante...";
-
-                    await enviarSolicitud({
-                        tipoSolicitud: "registro",
-
-                        idEnvio: idEnvio,
-
-                        fechaCliente: fechaCliente,
-
-                        apellidoPaterno:
-                            datosFormulario.apellidoPaterno,
-
-                        apellidoMaterno:
-                            datosFormulario.apellidoMaterno,
-
-                        nombres:
-                            datosFormulario.nombres,
-
-                        numeroColaborador:
-                            datosFormulario.numeroColaborador,
-
-                        puesto:
-                            datosFormulario.puesto,
-
-                        marca:
-                            datosFormulario.marca,
-
-                        calificacion:
-                            datosFormulario.calificacion,
-
-                        comentarios:
-                            datosFormulario.comentarios,
-
-                        cantidadArchivos:
-                            archivos.length
-                    });
-
-                    /*
-                     * Carga individual de evidencias.
-                     */
-                    for (
-                        let i = 0;
-                        i < archivos.length;
-                        i++
-                    ) {
-                        const archivo =
-                            archivos[i];
-
-                        contador.textContent =
-                            `Subiendo ${i + 1} de ` +
-                            `${archivos.length}: ` +
-                            archivo.name;
-
-                        const contenidoBase64 =
-                            await convertirABase64(
-                                archivo
-                            );
-
-                        await enviarSolicitud({
-                            tipoSolicitud: "archivo",
-
-                            idEnvio: idEnvio,
-
-                            nombreArchivo:
-                                archivo.name,
-
-                            tipoArchivo:
-                                archivo.type,
-
-                            contenidoArchivo:
-                                contenidoBase64
-                        });
-                    }
-
-                    contador.textContent = "";
-
-                    resultado.className = "ok";
-
-                    resultado.textContent =
-                        "✓ Información y archivos " +
-                        "enviados correctamente.";
-
-                    formulario.reset();
-
-                    actualizarArchivosSeleccionados();
-                    actualizarContadorComentarios();
-                } catch (error) {
-                    contador.textContent = "";
-
-                    mostrarError(
-                        "✖ No fue posible completar el envío. " +
-                        "Intente nuevamente."
-                    );
-
-                    console.error(
-                        "Error durante el envío:",
-                        error
-                    );
-                } finally {
-                    boton.disabled = false;
-
-                    boton.textContent =
-                        "Enviar información y archivos";
-                }
-            }
-        );
-
-        actualizarArchivosSeleccionados();
-        actualizarContadorComentarios();
+        preguntas.forEach(id=>{actualizarCondicional(id);actualizarContadorPregunta(id);});
+        actualizarArchivosSeleccionados(); actualizarContadorComentarios();
     </script>
 
 </body>
