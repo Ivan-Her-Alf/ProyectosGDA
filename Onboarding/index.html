@@ -39,8 +39,8 @@ const secciones=[
 ];
 const etiquetas=['Totalmente en desacuerdo','En desacuerdo','Neutral','De acuerdo','Totalmente de acuerdo'];
 const preguntas={  
-reclutamiento:['La información de la vacante, funciones y condiciones laborales fue clara y suficiente.','Recibí un trato respetuoso y profesional durante el proceso de reclutamiento.','La comunicación y el seguimiento del proceso fueron oportunos.','Mis dudas sobre la vacante y las siguientes etapas fueron atendidas de manera clara.','La información recibida durante el reclutamiento coincidió con las condiciones presentadas al momento la firma de contrato.'],
-contratacion:['Recibí información clara y anticipada sobre los documentos necesarios para formalizar mi ingreso.','Durante la firma de contrato, recibí un trato respetuoso y profesional.','El proceso de revisión de documentos y firma se realizó de manera ordenada y ágil.','Mis dudas o incidencias durante la firma fueron atendidas y resueltas de manera satisfactoria.','La información presentada durante la firma coincidió con las condiciones informadas en el proceso de reclutamiento.'],
+reclutamiento:['La información de la vacante, funciones y condiciones laborales fue clara y suficiente.','Recibí un trato respetuoso y profesional durante el proceso de reclutamiento.','La comunicación y el seguimiento del proceso fueron oportunos.','Mis dudas sobre la vacante y las siguientes etapas fueron atendidas de manera clara.','La información recibida durante el reclutamiento coincidió con las condiciones presentadas al momento la firma de contrato.','Recibí información clara y anticipada sobre los documentos necesarios para formalizar mi ingreso.'],
+contratacion:['Durante la firma de contrato, recibí un trato respetuoso y profesional.','El proceso de revisión de documentos y firma se realizó de manera ordenada y ágil.','Mis dudas o incidencias durante la firma fueron atendidas y resueltas de manera satisfactoria.','La información presentada durante la firma coincidió con las condiciones informadas en el proceso de reclutamiento.'],
 capacitacion:['La inducción me permitió comprender la organización, su cultura y la forma en que debo desenvolverme dentro de ella.','La persona responsable de la inducción explicó los temas de manera clara y profesional.','Recibí un trato respetuoso y una atención adecuada durante la capacitación.','Mis preguntas fueron atendidas y resueltas de manera clara durante la inducción.','La información y los materiales recibidos fueron útiles para facilitar mi incorporación a la organización.']};
 const textosComentarios={
 reclutamiento:'¿Ocurrió algo durante el proceso de reclutamiento que facilitó o dificultó tu ingreso?',
@@ -51,14 +51,23 @@ general:'¿Identificaste alguna falta o área de oportunidad durante todo tu pro
 const experiencia=['Muy mala','Mala','Regular','Buena','Excelente'];
 const recomendacion=['Nada probable','Poco probable','Neutral','Probable','Totalmente probable'];
 let paso=0;
-const respuestas={apellidoPaterno:'',apellidoMaterno:'',nombres:'',numeroColaborador:'',puesto:'',fechaIngreso:'',reclutamiento:{},nombreReclutador:'',contratacion:{},capacitacion:{},responsableInduccion:'',experienciaGeneral:'',coordinacionGeneral:'',recomendacion:'',tieneComentario:{reclutamiento:'',contratacion:'',capacitacion:'',general:''},comentarios:{reclutamiento:'',contratacion:'',capacitacion:'',general:''}};
+const respuestas={apellidoPaterno:'',apellidoMaterno:'',nombres:'',numeroColaborador:'',correo:'',marca:'',sucursal:'',puesto:'',fechaIngreso:'',reclutamiento:{},nombreReclutador:'',contratacion:{},capacitacion:{},responsableInduccion:'',experienciaGeneral:'',coordinacionGeneral:'',recomendacion:'',tieneComentario:{reclutamiento:'',contratacion:'',capacitacion:'',general:''},comentarios:{reclutamiento:'',contratacion:'',capacitacion:'',general:''}};
 const titulo=document.getElementById('titulo'),subtitulo=document.getElementById('subtitulo'),contenido=document.getElementById('contenido'),error=document.getElementById('error'),btnAnt=document.getElementById('anterior'),btnSig=document.getElementById('continuar');
 const esc=v=>String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
 function campo(id,label,valor,tipo='text',extra=''){return `<div class="grupo"><label class="etiqueta" for="${id}">${label} <span class="req">*</span></label><input id="${id}" class="campo" type="${tipo}" value="${esc(valor)}" ${extra}></div>`}
 function pregunta(sec,i,texto){const ops=etiquetas.map((et,j)=>{const n=j+1;return `<div class="opcion"><input type="radio" id="${sec}_${i}_${n}" name="${sec}_${i}" value="${n}" ${Number(respuestas[sec][i])===n?'checked':''}><label for="${sec}_${i}_${n}"><span class="numero">${n}</span><span>${et}</span></label></div>`}).join('');return `<fieldset class="pregunta"><legend class="texto-pregunta">${texto} <span class="req">*</span></legend><div class="opciones">${ops}</div></fieldset>`}
 function escala(nombre,texto,valor,labels){const ops=[1,2,3,4,5].map(n=>`<div class="opcion"><input type="radio" id="${nombre}_${n}" name="${nombre}" value="${n}" ${Number(valor)===n&&valor!==''?'checked':''}><label for="${nombre}_${n}"><span class="numero">${n}</span><span class="texto-mini">${labels[n-1]}</span></label></div>`).join('');return `<fieldset class="pregunta"><legend class="texto-pregunta">${texto} <span class="req">*</span></legend><div class="escala5">${ops}</div></fieldset>`}
 function enlazar(id,key,numerico=false){document.getElementById(id).addEventListener('input',e=>{if(numerico)e.target.value=e.target.value.replace(/\D/g,'');respuestas[key]=e.target.value})}
-function renderDatos(){contenido.innerHTML=`<div class="fila">${campo('apellidoPaterno','Apellido paterno',respuestas.apellidoPaterno)}${campo('apellidoMaterno','Apellido materno',respuestas.apellidoMaterno)}</div>${campo('nombres','Nombre(s)',respuestas.nombres)}<div class="fila">${campo('numeroColaborador','Número de colaborador',respuestas.numeroColaborador,'text','inputmode="numeric"')}${campo('puesto','Puesto',respuestas.puesto)}</div>${campo('fechaIngreso','Fecha de ingreso',respuestas.fechaIngreso,'date')}`;enlazar('apellidoPaterno','apellidoPaterno');enlazar('apellidoMaterno','apellidoMaterno');enlazar('nombres','nombres');enlazar('numeroColaborador','numeroColaborador',true);enlazar('puesto','puesto');enlazar('fechaIngreso','fechaIngreso')}
+function renderDatos(){
+  contenido.innerHTML=
+    `<div class="fila">${campo('apellidoPaterno','Apellido paterno',respuestas.apellidoPaterno)}${campo('apellidoMaterno','Apellido materno',respuestas.apellidoMaterno)}</div>`+
+    campo('nombres','Nombre(s)',respuestas.nombres)+
+    `<div class="fila">${campo('numeroColaborador','Número de colaborador',respuestas.numeroColaborador,'text','inputmode="numeric"')}${campo('correo','Correo electrónico',respuestas.correo,'email')}</div>`+
+    `<div class="fila">${campo('marca','Marca',respuestas.marca)}${campo('sucursal','Sucursal',respuestas.sucursal)}</div>`+
+    `<div class="fila">${campo('puesto','Puesto',respuestas.puesto)}${campo('fechaIngreso','Fecha de ingreso',respuestas.fechaIngreso,'date')}</div>`;
+  enlazar('apellidoPaterno','apellidoPaterno'); enlazar('apellidoMaterno','apellidoMaterno'); enlazar('nombres','nombres');
+  enlazar('numeroColaborador','numeroColaborador',true); enlazar('correo','correo'); enlazar('marca','marca'); enlazar('sucursal','sucursal'); enlazar('puesto','puesto'); enlazar('fechaIngreso','fechaIngreso');
+}
 function renderLikert(clave){contenido.innerHTML=preguntas[clave].map((p,i)=>pregunta(clave,i,p)).join('');preguntas[clave].forEach((_,i)=>document.querySelectorAll(`input[name="${clave}_${i}"]`).forEach(op=>op.addEventListener('change',e=>respuestas[clave][i]=Number(e.target.value))))}
 function agregarTexto(id,label,key){const d=document.createElement('div');d.innerHTML=campo(id,label,respuestas[key]);contenido.appendChild(d.firstElementChild);enlazar(id,key)}
 function normalizarOpciones(data){
@@ -136,7 +145,7 @@ function renderGeneral(){
   agregarComentarios('general');
 }
 function comentarioValido(clave){if(!respuestas.tieneComentario[clave])return false;if(respuestas.tieneComentario[clave]==='si'&&!respuestas.comentarios[clave].trim())return false;return true}
-function validar(){const k=secciones[paso].clave;if(k==='datos')return !!(respuestas.apellidoPaterno.trim()&&respuestas.apellidoMaterno.trim()&&respuestas.nombres.trim()&&respuestas.numeroColaborador.trim()&&respuestas.puesto.trim()&&respuestas.fechaIngreso);if(['reclutamiento','contratacion','capacitacion'].includes(k)){if(!preguntas[k].every((_,i)=>respuestas[k][i]))return false;if(k==='reclutamiento'&&!respuestas.nombreReclutador.trim())return false;if(k==='capacitacion'&&!respuestas.responsableInduccion.trim())return false;return comentarioValido(k)}if(k==='general')return respuestas.experienciaGeneral!==''&&respuestas.coordinacionGeneral!==''&&respuestas.recomendacion!==''&&comentarioValido('general');return true}
+function validar(){const k=secciones[paso].clave;if(k==='datos')return !!(respuestas.apellidoPaterno.trim()&&respuestas.apellidoMaterno.trim()&&respuestas.nombres.trim()&&respuestas.numeroColaborador.trim()&&/^\S+@\S+\.\S+$/.test(respuestas.correo.trim())&&respuestas.marca.trim()&&respuestas.sucursal.trim()&&respuestas.puesto.trim()&&respuestas.fechaIngreso);if(['reclutamiento','contratacion','capacitacion'].includes(k)){if(!preguntas[k].every((_,i)=>respuestas[k][i]))return false;if(k==='reclutamiento'&&!respuestas.nombreReclutador.trim())return false;if(k==='capacitacion'&&!respuestas.responsableInduccion.trim())return false;return comentarioValido(k)}if(k==='general')return respuestas.experienciaGeneral!==''&&respuestas.coordinacionGeneral!==''&&respuestas.recomendacion!==''&&comentarioValido('general');return true}
 function subir(){requestAnimationFrame(()=>{titulo.scrollIntoView({behavior:'smooth',block:'start'});titulo.focus({preventScroll:true})})}
 function render(){error.classList.remove('visible');const s=secciones[paso];titulo.textContent=s.titulo;subtitulo.textContent=s.subtitulo;subtitulo.hidden=!s.subtitulo;btnAnt.style.visibility=paso===0?'hidden':'visible';btnSig.textContent=paso===secciones.length-1?'Enviar respuestas':'Continuar →';btnSig.className=paso===secciones.length-1?'boton enviar':'boton continuar';({datos:renderDatos,reclutamiento:renderReclutamiento,contratacion:renderContratacion,capacitacion:renderCapacitacion,general:renderGeneral}[s.clave])()}
 function construirPayload(){
@@ -145,6 +154,9 @@ function construirPayload(){
     AMaterno:respuestas.apellidoMaterno.trim(),
     Nombre:respuestas.nombres.trim(),
     NumeroColab:respuestas.numeroColaborador.trim(),
+    Correo:respuestas.correo.trim(),
+    Marca:respuestas.marca.trim(),
+    Sucursal:respuestas.sucursal.trim(),
     Puesto:respuestas.puesto.trim(),
     FechaIngreso:respuestas.fechaIngreso,
     REC_Q1:Number(respuestas.reclutamiento[0]),
@@ -155,11 +167,11 @@ function construirPayload(){
     REC_Q6:respuestas.nombreReclutador.trim(),
     REC_COM_SI_NO:respuestas.tieneComentario.reclutamiento,
     REC_COMENTARIO:respuestas.comentarios.reclutamiento.trim(),
-    CON_Q1:Number(respuestas.contratacion[0]),
-    CON_Q2:Number(respuestas.contratacion[1]),
-    CON_Q3:Number(respuestas.contratacion[2]),
-    CON_Q4:Number(respuestas.contratacion[3]),
-    CON_Q5:Number(respuestas.contratacion[4]),
+    CON_Q1:Number(respuestas.reclutamiento[5]),
+    CON_Q2:Number(respuestas.contratacion[0]),
+    CON_Q3:Number(respuestas.contratacion[1]),
+    CON_Q4:Number(respuestas.contratacion[2]),
+    CON_Q5:Number(respuestas.contratacion[3]),
     CON_COM_SI_NO:respuestas.tieneComentario.contratacion,
     CON_COMENTARIO:respuestas.comentarios.contratacion.trim(),
     IND_Q1:Number(respuestas.capacitacion[0]),
